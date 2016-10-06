@@ -1,5 +1,10 @@
 {
     "require": {
         "voryx/thruway": "^0.4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src"
+        }
     }
 }

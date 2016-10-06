@@ -30,4 +30,11 @@ class Snake
      * @var int
      */
     public $headAngle;
+
+    /**
+     * Up, down, left, right
+     *
+     * @var string
+     */
+    public $direction;
 }
