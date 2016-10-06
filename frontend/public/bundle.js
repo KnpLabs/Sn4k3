@@ -1,1 +1,0 @@
-console.error("\n/Users/aguidis/Sites/knplabs/Sn4k3/frontend/src/app/arrowKeysManager.js:9\n    const KEY_LEFT = 37;\n          ^\nParseError: Unexpected token");
