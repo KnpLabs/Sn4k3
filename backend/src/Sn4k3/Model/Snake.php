@@ -85,18 +85,6 @@ class Snake implements CollisionableInterface
     }
 
     /**
-     * @param CollisionableInterface $collisionable
-     *
-     * @return bool
-     */
-    public function collidesWith(CollisionableInterface $collisionable): bool
-    {
-        $myHead = $this->getHead();
-
-        return CollisionsManager::testCollisionablesCollision([$myHead], $collisionable);
-    }
-
-    /**
      * Using trigonometry to get coordinates of the next point.
      */
     public function calculateNextCoordinatePoint(): Point
