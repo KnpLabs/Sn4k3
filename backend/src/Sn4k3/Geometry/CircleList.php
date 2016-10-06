@@ -27,7 +27,7 @@ class CircleList implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function add(Circle $circle)
     {
-        $this->circles[] = $circle;
+        $this[] = $circle;
     }
 
     /**
