@@ -8,6 +8,9 @@ use Sn4k3\Geometry\Point;
 
 class Snake implements CollisionableInterface
 {
+    const DEFAULT_HEAD_ANGLE = 0;
+    const DEFAULT_SPEED = 10;
+
     /**
      * @var Player
      */
@@ -34,7 +37,7 @@ class Snake implements CollisionableInterface
      *
      * @var int
      */
-    public $headAngle = 0;
+    public $headAngle;
 
     /**
      * Up, down, left, right
@@ -50,17 +53,11 @@ class Snake implements CollisionableInterface
      */
     public $speed = 10;
 
-    public function __construct($speed = null, $headAngle = null)
+    public function __construct(int $speed = self::DEFAULT_SPEED, int $headAngle = self::DEFAULT_HEAD_ANGLE)
     {
         $this->bodyParts = new CircleList();
-
-        if (null !== $speed) {
-            $this->speed = $speed;
-        }
-
-        if (null !== $headAngle) {
-            $this->headAngle = $headAngle;
-        }
+        $this->speed = $speed;
+        $this->headAngle = $headAngle;
     }
 
     /**

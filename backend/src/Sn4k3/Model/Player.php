@@ -4,6 +4,8 @@ namespace Sn4k3\Model;
 
 class Player
 {
+    const DEFAULT_TICK_INTERVAL = 10;
+
     /**
      * @var string
      */
@@ -29,13 +31,11 @@ class Player
      *
      * @var int
      */
-    public $angleIntervalOnTick = 10;
+    public $angleIntervalOnTick;
 
-    public function __construct($angleIntervalOnTick = null)
+    public function __construct(int $angleIntervalOnTick = self::DEFAULT_TICK_INTERVAL)
     {
-        if (null !== $angleIntervalOnTick) {
-            $this->angleIntervalOnTick = (int) $angleIntervalOnTick;
-        }
+        $this->angleIntervalOnTick = $angleIntervalOnTick;
     }
 
     /**
