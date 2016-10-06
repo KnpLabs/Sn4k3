@@ -115,7 +115,7 @@ class Game
      */
     public function initializePlayer(string $name)
     {
-        $playerExists = $this->getPlayerByName($name);
+        $playerExists = $this->getPlayerByName($name, false);
 
         if ($playerExists) {
             return;
