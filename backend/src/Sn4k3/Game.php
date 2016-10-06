@@ -115,6 +115,12 @@ class Game
      */
     public function initializePlayer(string $name)
     {
+        $playerExists = $this->getPlayerByName($name);
+
+        if ($playerExists) {
+            return;
+        }
+
         $player = new Player();
         $player->hash = substr(md5(random_bytes(64)), 0, 16);
         $player->name = $name;
@@ -127,7 +133,7 @@ class Game
      *
      * @return Player
      */
-    public function getPlayerByName(string $name): Player
+    public function getPlayerByName(string $name, $exceptional = true): Player
     {
         foreach ($this->players as $player) {
             if ($player->name === $name) {
@@ -135,7 +141,9 @@ class Game
             }
         }
 
-        throw new \InvalidArgumentException('No such player');
+        if ($exceptional) {
+            throw new \InvalidArgumentException('No such player');
+        }
     }
 
     /**

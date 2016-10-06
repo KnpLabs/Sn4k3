@@ -19,7 +19,7 @@ class ArrowKeysManager {
 
                 // Publish on topic "action" to broadcast
                 // and tell to others client to draw the circles
-                this.crossbarConnection.session.publish('action', {
+                this.crossbarConnection.session.publish('action', [], {
                     username: window.username,
                     direction: 'left',
                     pressed: false
@@ -29,7 +29,7 @@ class ArrowKeysManager {
 
             case KEY_RIGHT:
 
-                this.crossbarConnection.session.publish('action', {
+                this.crossbarConnection.session.publish('action', [], {
                     username: window.username,
                     direction: 'right',
                     pressed: false
@@ -43,7 +43,7 @@ class ArrowKeysManager {
         switch (e.keyCode) {
             case KEY_LEFT:
 
-                this.crossbarConnection.session.publish('action', {
+                this.crossbarConnection.session.publish('action', [], {
                     username: window.username,
                     direction: 'right',
                     pressed: true
@@ -53,7 +53,7 @@ class ArrowKeysManager {
 
             case KEY_RIGHT:
 
-                this.crossbarConnection.session.publish('action', {
+                this.crossbarConnection.session.publish('action', [], {
                     username: window.username,
                     direction: 'right',
                     pressed: true

@@ -8,15 +8,17 @@ const ArrowKeysManager = require('./arrowKeysManager');
 CrossbarConnection.open();
 
 $(document).ready(() => {
+    try {
+        window.username = prompt('Please enter your username: ');
 
-    window.username = prompt('Please enter your username');
+        // Init Area
+        var playArea = new SnakeArea('snake-area');
+        playArea.init();
 
-    // Init Area
-    var playArea = new SnakeArea('snake-area');
-    playArea.init();
-    playArea.addFruit();
-
-    // Listen arrow keys events
-    var arrowKeysManager = new ArrowKeysManager(CrossbarConnection);
-    arrowKeysManager.init();
+        // Listen arrow keys events
+        var arrowKeysManager = new ArrowKeysManager(CrossbarConnection);
+        arrowKeysManager.init();
+    } catch (e) {
+        console.log(e);
+    }
 });

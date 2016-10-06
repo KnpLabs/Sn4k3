@@ -2,6 +2,8 @@
 
 namespace Sn4k3\Model;
 
+use Sn4k3\Geometry\CircleList;
+
 class Player
 {
     const DEFAULT_TICK_INTERVAL = 10;
@@ -24,7 +26,12 @@ class Player
     /**
      * @var int
      */
-    public $score;
+    public $score = 0;
+
+    public function __construct()
+    {
+        $this->snake = new Snake(new CircleList());
+    }
 
     /**
      * In degree.
