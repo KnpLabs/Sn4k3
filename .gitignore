@@ -1,2 +1,5 @@
 vendor
 .crossbar
+
+frontend/node_modules
+frontend/public/bundle.js

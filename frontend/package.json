@@ -1,0 +1,15 @@
+{
+  "name": "sn4k3-frontend",
+  "version": "1.0.0",
+  "description": "Snake fights fuck yeah",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sn4k3 Team",
+  "license": "ISC",
+  "dependencies": {
+    "autobahn": "^0.10.1",
+    "jquery": "^3.1.1"
+  }
+}
