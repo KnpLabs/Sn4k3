@@ -9,10 +9,10 @@ class Food
     /**
      * @var Point
      */
-    private $point;
+    public $point;
 
     /**
      * @var int
      */
-    private $value;
+    public $value;
 }

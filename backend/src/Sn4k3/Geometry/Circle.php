@@ -7,10 +7,10 @@ class Circle
     /**
      * @var Point
      */
-    private $centerPoint;
+    public $centerPoint;
 
     /**
      * @var int
      */
-    private $radius;
+    public $radius;
 }

@@ -9,5 +9,5 @@ class SnakeBodypart
     /**
      * @var Circle
      */
-    private $circle;
+    public $circle;
 }

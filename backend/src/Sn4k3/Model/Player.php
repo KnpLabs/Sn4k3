@@ -7,10 +7,10 @@ class Player
     /**
      * @var Snake
      */
-    private $snake;
+    public $snake;
 
     /**
      * @var int
      */
-    private $score;
+    public $score;
 }

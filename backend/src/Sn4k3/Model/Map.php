@@ -7,10 +7,10 @@ class Map
     /**
      * @var Snake[]
      */
-    private $snakes;
+    public $snakes;
 
     /**
      * @var Food[]
      */
-    private $foods;
+    public $foods;
 }

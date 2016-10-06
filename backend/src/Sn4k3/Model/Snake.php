@@ -7,14 +7,14 @@ class Snake
     /**
      * @var Player
      */
-    private $player;
+    public $player;
 
     /**
      * First body part is the head, last is the tail.
      *
      * @var SnakeBodypart[]
      */
-    private $bodyParts;
+    public $bodyParts;
 
     /**
      * Number of body parts.
@@ -22,11 +22,11 @@ class Snake
      *
      * @var int
      */
-    private $length;
+    public $length;
 
     /**
      * From 0 to 360°
      * @var float
      */
-    private $headAngle;
+    public $headAngle;
 }

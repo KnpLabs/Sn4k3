@@ -7,10 +7,10 @@ class Point
     /**
      * @var int
      */
-    private $x;
+    public $x;
 
     /**
      * @var int
      */
-    private $y;
+    public $y;
 }
