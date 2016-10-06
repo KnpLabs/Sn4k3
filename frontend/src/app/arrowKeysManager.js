@@ -14,8 +14,8 @@ class ArrowKeysManager {
     }
     
     init() {
-        document.onkeyup = this.handleKeyUp();
-        document.onkeydown = this.handleKeyDown();
+        document.onkeyup = this.handleKeyUp.bind(this);
+        document.onkeydown = this.handleKeyDown.bind(this);
     }
     
     handleKeyUp(e) {
