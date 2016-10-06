@@ -4,7 +4,7 @@ namespace Sn4k3\Model;
 
 use Sn4k3\Geometry\Circle;
 use Sn4k3\Geometry\CircleList;
-use Sn4k3\Math\CollisionsManager;
+use Sn4k3\Geometry\Point;
 
 class Snake implements CollisionableInterface
 {
@@ -29,11 +29,12 @@ class Snake implements CollisionableInterface
     public $length;
 
     /**
-     * From 0 to 360°
+     * From 0 to 360°.
+     * Represents the clock.
      *
      * @var int
      */
-    public $headAngle;
+    public $headAngle = 0;
 
     /**
      * Up, down, left, right
@@ -42,9 +43,32 @@ class Snake implements CollisionableInterface
      */
     public $direction;
 
-    public function __construct(CircleList $bodyParts)
+    /**
+     * The amount of pixels crossed on each tick.
+     *
+     * @var int
+     */
+    public $speed = 10;
+
+    public function __construct($speed = null, $headAngle = null)
     {
-        $this->bodyParts = $bodyParts;
+        $this->bodyParts = new CircleList();
+
+        if (null !== $speed) {
+            $this->speed = $speed;
+        }
+
+        if (null !== $headAngle) {
+            $this->headAngle = $headAngle;
+        }
+    }
+
+    /**
+     * @param Circle $circle
+     */
+    public function addBodyPart(Circle $circle)
+    {
+        $this->bodyParts->add($circle);
     }
 
     /**
@@ -70,5 +94,20 @@ class Snake implements CollisionableInterface
         $myHead = $this->getHead();
 
         return CollisionsManager::testCollisionablesCollision([$myHead], $collisionable);
+    }
+
+    /**
+     * Using trigonometry to get coordinates of the next point.
+     */
+    public function calculateNextCoordinatePoint(): Point
+    {
+        $headPoint = $this->getCircleList()->first()->centerPoint;
+
+        $angleInRadians = deg2rad($this->headAngle);
+
+        $y = $headPoint->y + ($this->speed * cos($angleInRadians));
+        $x = $headPoint->x + ($this->speed * sin($angleInRadians));
+
+        return new Point(round($x), round($y));
     }
 }

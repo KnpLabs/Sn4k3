@@ -21,7 +21,7 @@
 
     <testsuites>
         <testsuite name="Sn4k3 Test Suite">
-            <directory>src/Sn4k3/Tests</directory>
+            <directory>./src/Sn4k3/Tests</directory>
         </testsuite>
     </testsuites>
 
