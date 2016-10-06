@@ -26,7 +26,8 @@ class Snake
 
     /**
      * From 0 to 360°
-     * @var float
+     *
+     * @var int
      */
     public $headAngle;
 }
