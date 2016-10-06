@@ -15,7 +15,7 @@ class CollisionsTest extends TestCase
         $circleA = new Circle(new Point(0, 0), 10);
         $circleB = new Circle(new Point(100, 100), 10);
 
-        $this->assertFalse(CollisionsManager::testCirclesCollision($circleA, $circleB));
+        static::assertFalse(CollisionsManager::testCirclesCollision($circleA, $circleB));
     }
 
     public function test two near circles do collide()
@@ -23,7 +23,7 @@ class CollisionsTest extends TestCase
         $circleA = new Circle(new Point(0, 0), 10);
         $circleB = new Circle(new Point(12, 12), 10);
 
-        $this->assertTrue(CollisionsManager::testCirclesCollision($circleA, $circleB));
+        static::assertTrue(CollisionsManager::testCirclesCollision($circleA, $circleB));
     }
 
     public function test snake and far food dont collide()
@@ -34,7 +34,7 @@ class CollisionsTest extends TestCase
         ]));
         $food = new Food(new Circle(new Point(20, 20), 10));
 
-        $this->assertFalse(CollisionsManager::testCollisionablesCollision($snake, $food));
+        static::assertFalse(CollisionsManager::testCollisionablesCollision($snake, $food));
     }
 
     public function test snake and near food do collide()
@@ -45,7 +45,7 @@ class CollisionsTest extends TestCase
         ]));
         $food = new Food(new Circle(new Point(6, 6), 10));
 
-        $this->assertTrue(CollisionsManager::testCollisionablesCollision($snake, $food));
+        static::assertTrue(CollisionsManager::testCollisionablesCollision($snake, $food));
     }
 
     public function test close snakes do collide()
@@ -59,6 +59,6 @@ class CollisionsTest extends TestCase
             new Circle(new Point(6, 6), 5),
         ]));
 
-        $this->assertTrue(CollisionsManager::testCollisionablesCollision($snakeA, $snakeB));
+        static::assertTrue(CollisionsManager::testCollisionablesCollision($snakeA, $snakeB));
     }
 }
