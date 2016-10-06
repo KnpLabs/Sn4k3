@@ -1,14 +1,10 @@
-/*
- * 37 - left
- * 38 - up
- * 39 - right
- * 40 - down
- */
+const KEY_LEFT = 37;
+const KEY_RIGHT = 39;
+
 class ArrowKeysManager {
 
     constructor(CrossbarConnection) {
-        this.KEY_LEFT = 37;
-        this.KEY_RIGHT = 39;
+
         this.crossbarConnection = CrossbarConnection;
     }
 
@@ -19,7 +15,7 @@ class ArrowKeysManager {
 
     handleKeyUp(e) {
         switch (e.keyCode) {
-            case this.KEY_LEFT:
+            case KEY_LEFT:
 
                 // Publish on topic "action" to broadcast
                 // and tell to others client to draw the circles
@@ -31,7 +27,7 @@ class ArrowKeysManager {
 
                 break;
 
-            case this.KEY_RIGHT:
+            case KEY_RIGHT:
 
                 this.crossbarConnection.session.publish('action', {
                     username: window.username,
@@ -45,7 +41,7 @@ class ArrowKeysManager {
 
     handleKeyDown(e) {
         switch (e.keyCode) {
-            case this.KEY_LEFT:
+            case KEY_LEFT:
 
                 this.crossbarConnection.session.publish('action', {
                     username: window.username,
@@ -55,7 +51,7 @@ class ArrowKeysManager {
 
                 break;
 
-            case this.KEY_RIGHT:
+            case KEY_RIGHT:
 
                 this.crossbarConnection.session.publish('action', {
                     username: window.username,
