@@ -8,4 +8,9 @@ class Player
      * @var Snake
      */
     private $snake;
+
+    /**
+     * @var int
+     */
+    private $score;
 }

@@ -10,7 +10,23 @@ class Snake
     private $player;
 
     /**
-     * @var Point[]
+     * First body part is the head, last is the tail.
+     *
+     * @var SnakeBodypart[]
      */
-    private $points;
+    private $bodyParts;
+
+    /**
+     * Number of body parts.
+     * If > count(bodyParts), it means we have to create a new bodyPart.
+     *
+     * @var int
+     */
+    private $length;
+
+    /**
+     * From 0 to 360°
+     * @var float
+     */
+    private $headAngle;
 }
