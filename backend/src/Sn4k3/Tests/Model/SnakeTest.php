@@ -16,7 +16,7 @@ class SnakeTest extends TestCase
      * @param int $expectedX
      * @param int $expectedY
      */
-    public function test calculation of next point($angle, $expectedX, $expectedY)
+    public function test calculation of next point(int $angle, int $expectedX, int $expectedY)
     {
         $snake = new Snake();
         $snake->length = 1;
