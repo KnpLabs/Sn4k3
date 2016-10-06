@@ -1,10 +1,12 @@
 <?php
 
+namespace Sn4k3\Tests\GameEngine;
+
 use PHPUnit\Framework\TestCase;
 use Sn4k3\Geometry\Circle;
-use Sn4k3\Geometry\CircleList;
 use Sn4k3\Geometry\Point;
 use Sn4k3\Math\CollisionsManager;
+use Sn4k3\Model\FixedObject;
 use Sn4k3\Model\Food;
 use Sn4k3\Model\Snake;
 
@@ -46,6 +48,17 @@ class CollisionsTest extends TestCase
         $food = new Food(new Circle(new Point(6, 6), 10));
 
         static::assertTrue(CollisionsManager::testCollisionablesCollision($snake, $food));
+    }
+
+    public function test snake and fixed object do collide()
+    {
+        $snake = new Snake();
+        $snake->addBodyPart(new Circle(new Point(0, 0), 5));
+        $snake->addBodyPart(new Circle(new Point(-4, -4), 5));
+
+        $fixedObject = new FixedObject(new Circle(new Point(6, 6), 10));
+
+        static::assertTrue(CollisionsManager::testCollisionablesCollision($snake, $fixedObject));
     }
 
     public function test close snakes do collide()
