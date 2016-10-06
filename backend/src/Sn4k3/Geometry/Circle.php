@@ -2,7 +2,7 @@
 
 namespace Sn4k3\Geometry;
 
-class Circle implements PhysicalObjectInterface
+class Circle
 {
     /**
      * @var Point

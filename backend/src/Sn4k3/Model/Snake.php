@@ -14,7 +14,7 @@ class Snake
      *
      * @var SnakeBodypart[]
      */
-    public $bodyParts;
+    public $bodyParts = [];
 
     /**
      * Number of body parts.

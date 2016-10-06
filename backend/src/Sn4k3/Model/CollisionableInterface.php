@@ -2,19 +2,19 @@
 
 namespace Sn4k3\Model;
 
-use Sn4k3\Geometry\Point;
+use Sn4k3\Geometry\Circle;
 
 interface CollisionableInterface
 {
     /**
-     * @return Point
+     * @return Circle
      */
-    public function getPosition(): Point;
+    public function getCircleArea(): Circle;
 
     /**
      * @param CollisionableInterface $collisionable
      *
      * @return bool
      */
-    public function collides(CollisionableInterface $collisionable): bool;
+    public function collidesWith(CollisionableInterface $collisionable): bool;
 }

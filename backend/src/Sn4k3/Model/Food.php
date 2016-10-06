@@ -2,17 +2,41 @@
 
 namespace Sn4k3\Model;
 
-use Sn4k3\Geometry\Point;
+use Sn4k3\Geometry\Circle;
 
-class Food
+class Food implements PickableInterface
 {
     /**
-     * @var Point
+     * @var Circle
      */
-    public $point;
+    public $circle;
 
     /**
      * @var int
      */
     public $value;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCircleArea(): Circle
+    {
+        return $this->circle;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function collidesWith(CollisionableInterface $collisionable): bool
+    {
+        // TODO: Implement collides() method.
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function onPick(Snake $snake): void
+    {
+        $snake->length += $this->value;
+    }
 }
