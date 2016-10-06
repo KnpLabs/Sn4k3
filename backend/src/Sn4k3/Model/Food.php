@@ -17,6 +17,11 @@ class Food implements PickableInterface
      */
     public $value;
 
+    public function __construct(Circle $circle)
+    {
+        $this->circle = $circle;
+    }
+
     /**
      * {@inheritdoc}
      */
