@@ -18,5 +18,3 @@ class SnakeArea {
 }
 
 module.exports = SnakeArea;
-
-      
