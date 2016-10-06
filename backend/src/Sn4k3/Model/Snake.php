@@ -2,7 +2,9 @@
 
 namespace Sn4k3\Model;
 
+use Sn4k3\Geometry\Circle;
 use Sn4k3\Geometry\CircleList;
+use Sn4k3\Math\CollisionsManager;
 
 class Snake implements CollisionableInterface
 {
@@ -40,9 +42,9 @@ class Snake implements CollisionableInterface
      */
     public $direction;
 
-    public function __construct()
+    public function __construct(CircleList $bodyParts)
     {
-        $this->bodyParts = new CircleList();
+        $this->bodyParts = $bodyParts;
     }
 
     /**
@@ -53,6 +55,11 @@ class Snake implements CollisionableInterface
         return $this->bodyParts;
     }
 
+    public function getHead(): Circle
+    {
+        return $this->bodyParts[0];
+    }
+
     /**
      * @param CollisionableInterface $collisionable
      *
@@ -60,6 +67,8 @@ class Snake implements CollisionableInterface
      */
     public function collidesWith(CollisionableInterface $collisionable): bool
     {
-        // TODO: Implement collidesWith() method.
+        $myHead = $this->getHead();
+
+        return CollisionsManager::testCollisionablesCollision([$myHead], $collisionable);
     }
 }

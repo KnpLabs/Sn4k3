@@ -12,7 +12,7 @@
          stopOnFailure="false"
          colors="true"
          verbose="true"
-         bootstrap="src/Tests/bootstrap.php"
+         bootstrap="src/Sn4k3/Tests/bootstrap.php"
          beStrictAboutTestsThatDoNotTestAnything="true"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTodoAnnotatedTests="true"
@@ -21,27 +21,15 @@
 
     <testsuites>
         <testsuite name="Sn4k3 Test Suite">
-            <directory>./src/Tests</directory>
+            <directory>src/Sn4k3/Tests</directory>
         </testsuite>
     </testsuites>
-
-    <!--
-    <logging>
-        <log type="coverage-html" target="./build/log/report" lowUpperBound="35" highLowerBound="70" />
-        <log type="coverage-clover" target="./build/log/coverage.xml" />
-        <log type="coverage-text" target="php://stdout" showUncoveredFiles="false" />
-    </logging>
-    -->
-
-    <php>
-        <ini name="zend.enable_gc" value="0" />
-    </php>
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory>./src</directory>
             <exclude>
-                <directory>./src/Tests</directory>
+                <directory>./src/Sn4k3/Tests</directory>
             </exclude>
         </whitelist>
     </filter>
