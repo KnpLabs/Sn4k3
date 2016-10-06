@@ -3,12 +3,12 @@
     "license": "proprietary",
     "description": "Hiss, a kuwl snek game tu play",
     "type": "project",
-    "autoload": {
-        "psr-4": {
-            "": "src/"
-        }
-    },
     "require": {
         "voryx/thruway": "^0.4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src"
+        }
     }
 }

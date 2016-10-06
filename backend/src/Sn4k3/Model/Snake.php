@@ -33,6 +33,13 @@ class Snake implements CollisionableInterface
      */
     public $headAngle;
 
+    /**
+     * Up, down, left, right
+     *
+     * @var string
+     */
+    public $direction;
+
     public function __construct()
     {
         $this->bodyParts = new CircleList();
