@@ -3,6 +3,7 @@
 namespace Sn4k3\Model;
 
 use Sn4k3\Geometry\Circle;
+use Sn4k3\Geometry\CircleList;
 
 class Food implements PickableInterface
 {
@@ -19,9 +20,9 @@ class Food implements PickableInterface
     /**
      * {@inheritdoc}
      */
-    public function getCircleArea(): Circle
+    public function getCircleList(): CircleList
     {
-        return $this->circle;
+        return new CircleList([$this->circle]);
     }
 
     /**

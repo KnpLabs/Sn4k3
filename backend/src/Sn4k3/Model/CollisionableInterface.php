@@ -2,14 +2,14 @@
 
 namespace Sn4k3\Model;
 
-use Sn4k3\Geometry\Circle;
+use Sn4k3\Geometry\CircleList;
 
 interface CollisionableInterface
 {
     /**
-     * @return Circle
+     * @return CircleList
      */
-    public function getCircleArea(): Circle;
+    public function getCircleList(): CircleList;
 
     /**
      * @param CollisionableInterface $collisionable
