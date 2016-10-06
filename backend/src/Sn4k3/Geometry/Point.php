@@ -1,6 +1,6 @@
 <?php
 
-namespace Sn4k3;
+namespace Sn4k3\Geometry;
 
 class Point
 {
