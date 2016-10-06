@@ -133,7 +133,7 @@ class Game
      *
      * @return Player
      */
-    public function getPlayerByName(string $name, $exceptional = true): Player
+    public function getPlayerByName(string $name, $exceptional = true)
     {
         foreach ($this->players as $player) {
             if ($player->name === $name) {
