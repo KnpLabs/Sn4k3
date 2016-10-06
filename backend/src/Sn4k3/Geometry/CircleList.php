@@ -5,7 +5,7 @@ namespace Sn4k3\Geometry;
 /**
  * Just an array of Circle objects.
  */
-class CircleList implements \ArrayAccess, \Traversable, \Countable
+class CircleList implements \ArrayAccess, \Countable, \IteratorAggregate
 {
     /**
      * @var Circle[]
@@ -23,9 +23,19 @@ class CircleList implements \ArrayAccess, \Traversable, \Countable
     }
 
     /**
+     * @return Circle
+     */
+    public function first(): Circle
+    {
+        reset($this->circles);
+
+        return current($this->circles);
+    }
+
+    /**
      * {@inheritdoc}
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return array_key_exists($offset, $this->circles);
     }
@@ -54,7 +64,11 @@ class CircleList implements \ArrayAccess, \Traversable, \Countable
             ));
         }
 
-        $this->circles[$offset] = $value;
+        if (null === $offset) {
+            $this->circles[] = $value;
+        } else {
+            $this->circles[$offset] = $value;
+        }
     }
 
     /**
@@ -68,8 +82,16 @@ class CircleList implements \ArrayAccess, \Traversable, \Countable
     /**
      * {@inheritdoc}
      */
-    public function count()
+    public function count(): integer
     {
         return count($this->circles);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->circles);
     }
 }

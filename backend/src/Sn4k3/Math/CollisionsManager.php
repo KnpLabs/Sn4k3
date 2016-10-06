@@ -19,7 +19,7 @@ final class CollisionsManager
             }
         }
 
-        return false;   
+        return false;
     }
 
     public static function testCirclesCollision(
