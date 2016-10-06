@@ -25,6 +25,20 @@ class Player
     public $score;
 
     /**
+     * In degree.
+     *
+     * @var int
+     */
+    public $angleIntervalOnTick = 10;
+
+    public function __construct($angleIntervalOnTick = null)
+    {
+        if (null !== $angleIntervalOnTick) {
+            $this->angleIntervalOnTick = (int) $angleIntervalOnTick;
+        }
+    }
+
+    /**
      * @param $direction
      *
      * @return bool
@@ -50,9 +64,9 @@ class Player
     }
 
     /**
-     * @param $direction
+     * @param string $direction
      */
-    public function changeDirection($direction)
+    public function changeDirection(string $direction)
     {
         if ($this->canChangeDirection($direction)) {
             $this->snake->direction = $direction;
