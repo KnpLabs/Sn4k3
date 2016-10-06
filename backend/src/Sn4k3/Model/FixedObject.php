@@ -2,20 +2,14 @@
 
 namespace Sn4k3\Model;
 
-use Sn4k3\Geometry\Circle;
 use Sn4k3\Geometry\CircleList;
 
-class Food implements PickableInterface
+class FixedObject implements CollisionableInterface
 {
     /**
-     * @var Circle
+     * @var CircleList
      */
     public $circle;
-
-    /**
-     * @var int
-     */
-    public $value;
 
     /**
      * {@inheritdoc}
@@ -31,13 +25,5 @@ class Food implements PickableInterface
     public function collidesWith(CollisionableInterface $collisionable): bool
     {
         // TODO: Implement collides() method.
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function onPick(Snake $snake): void
-    {
-        $snake->length += $this->value;
     }
 }

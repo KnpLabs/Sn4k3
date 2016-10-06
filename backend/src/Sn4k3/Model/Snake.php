@@ -2,7 +2,9 @@
 
 namespace Sn4k3\Model;
 
-class Snake
+use Sn4k3\Geometry\CircleList;
+
+class Snake implements CollisionableInterface
 {
     /**
      * @var Player
@@ -12,7 +14,7 @@ class Snake
     /**
      * First body part is the head, last is the tail.
      *
-     * @var SnakeBodypart[]
+     * @var CircleList
      */
     public $bodyParts;
 
@@ -37,4 +39,27 @@ class Snake
      * @var string
      */
     public $direction;
+
+    public function __construct()
+    {
+        $this->bodyParts = new CircleList();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCircleList(): CircleList
+    {
+        return $this->bodyParts;
+    }
+
+    /**
+     * @param CollisionableInterface $collisionable
+     *
+     * @return bool
+     */
+    public function collidesWith(CollisionableInterface $collisionable): bool
+    {
+        // TODO: Implement collidesWith() method.
+    }
 }
