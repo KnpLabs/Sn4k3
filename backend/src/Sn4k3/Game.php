@@ -70,14 +70,14 @@ class Game
             echo sprintf(
                 'Player %s changed direction to %s',
                 $event->player, $event->direction
-            );
+            ), PHP_EOL;
         }
 
         foreach ($this->players as $player) {
             $player->makeMove();
         }
 
-        echo 'I am a tick, please implement me';
+        echo 'I am a tick, please implement me', PHP_EOL;
     }
 
     /**
