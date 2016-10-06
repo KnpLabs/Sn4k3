@@ -8,14 +8,14 @@ use Sn4k3\Model\Player;
 class Game
 {
     /**
-     * In milliseconds, corresponds to the tick interval.
+     * In milliseconds.
      *
      * @var int
      */
     private $tickInterval = 1000;
 
     /**
-     * @var array
+     * @var Player[]
      */
     private $players = [];
 
@@ -25,7 +25,7 @@ class Game
     private $loop;
 
     /**
-     * @var array
+     * @var Event[]
      */
     private $awaitingEvents = [];
 
@@ -34,6 +34,10 @@ class Game
      */
     private $isRunning = false;
 
+    /**
+     * @param LoopInterface $loop
+     * @param null $tickInterval
+     */
     public function __construct(LoopInterface $loop, $tickInterval = null)
     {
         $this->loop = $loop;
@@ -42,36 +46,53 @@ class Game
         }
     }
 
+    /**
+     * Run the loop for the game to start.
+     */
     public function run()
     {
         if ($this->isRunning) {
             throw new \LogicException('Game is already running');
         }
 
+        // Execute $this->tick() on every tick interval
         $this->loop->addPeriodicTimer($this->tickInterval / 1000, [$this, 'tick']);
         $this->isRunning = true;
         $this->loop->run();
     }
 
+    /**
+     * Execute every action while ticking:
+     */
     public function tick()
     {
-        while ($event = array_shift($awaitingEvents)) {
-            var_dump(sprintf('Player %s changed direction to %s'));
+        while ($event = array_shift($this->awaitingEvents)) {
+            echo sprintf(
+                'Player %s changed direction to %s',
+                $event->player, $event->direction
+            );
         }
 
         foreach ($this->players as $player) {
             $player->makeMove();
         }
 
-        var_dump('I am a tick, please implement me');
+        echo 'I am a tick, please implement me';
     }
 
+    /**
+     * @param Event $event
+     */
     public function addEvent(Event $event)
     {
         $this->awaitingEvents[] = $event;
     }
 
-    public function changeDirection($name, $direction)
+    /**
+     * @param string $name
+     * @param string $direction
+     */
+    public function changeDirection(string $name, $direction)
     {
         $player = $this->getPlayerByName($name);
 
@@ -82,7 +103,10 @@ class Game
         $player->changeDirection($direction);
     }
 
-    public function initializePlayer($name)
+    /**
+     * @param string $name
+     */
+    public function initializePlayer(string $name)
     {
         $player = new Player();
         $player->hash = substr(md5(random_bytes(64)), 0, 16);
@@ -91,7 +115,12 @@ class Game
         $this->players[$player->hash] = $player;
     }
 
-    public function getPlayerByName($name) : Player
+    /**
+     * @param string $name
+     *
+     * @return Player
+     */
+    public function getPlayerByName(string $name): Player
     {
         foreach ($this->players as $player) {
             if ($player->name === $name) {
@@ -102,9 +131,14 @@ class Game
         throw new \InvalidArgumentException('No such player');
     }
 
-    public function getPlayerByHash($hash)
+    /**
+     * @param $hash
+     *
+     * @return Player
+     */
+    public function getPlayerByHash(string $hash): Player
     {
-        if (isset($this->players[$hash])) {
+        if (array_key_exists($hash, $this->players)) {
             return $this->players[$hash];
         }
 
