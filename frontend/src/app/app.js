@@ -18,6 +18,5 @@ $(document).ready(() => {
     
     // Listen arrow keys events
     var arrowKeysManager = new ArrowKeysManager(CrossbarConnection);
-    arrowKeysManager.handleKeyDown();
-    arrowKeysManager.handleKeyUp();
+    arrowKeysManager.init();
 });

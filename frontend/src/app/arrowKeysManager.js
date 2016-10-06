@@ -6,64 +6,67 @@
  */
 class ArrowKeysManager {
 
+    const KEY_LEFT = 37;
+    const KEY_RIGHT = 39;
+
     constructor(CrossbarConnection) {
         this.crossbarConnection = CrossbarConnection;
     }
+    
+    init() {
+        document.onkeyup = this.handleKeyUp();
+        document.onkeydown = this.handleKeyDown();
+    }
+    
+    handleKeyUp(e) {
+        switch (e.keyCode) {
+            case ArrowKeysManager.KEY_LEFT:
 
-    handleKeyUp() {
-        document.onkeyup = function(e) {
-            switch (e.keyCode) {
-                case 37:
+                // Publish on topic "action" to broadcast
+                // and tell to others client to draw the circles
+                this.crossbarConnection.session.publish('action', {
+                    username: window.username,
+                    direction: 'left',
+                    pressed: false
+                });
+                
+                break;
 
-                    // Publish on topic "action" to broadcast
-                    // and tell to others client to draw the circles
-                    this.crossbarConnection.session.publish('action', {
-                        username: window.username,
-                        direction: 'left',
-                        pressed: false
-                    });
-                    
-                    break;
-
-                case 39:
-                    
-                    this.crossbarConnection.session.publish('action', {
-                        username: window.username,
-                        direction: 'right',
-                        pressed: false
-                    });
-                    
-                    break;
-            }
-        };
+            case ArrowKeysManager.KEY_RIGHT:
+                
+                this.crossbarConnection.session.publish('action', {
+                    username: window.username,
+                    direction: 'right',
+                    pressed: false
+                });
+                
+                break;
+        }
     }
 
-    handleKeyDown() {
-        document.onkeydown = function(e) {
-            switch (e.keyCode) {
-                case 37:
+    handleKeyDown(e) {
+        switch (e.keyCode) {
+            case ArrowKeysManager.KEY_LEFT:
 
-                    this.crossbarConnection.session.publish('action', {
-                        username: window.username,
-                        direction: 'right',
-                        pressed: true
-                    });
-                    
-                    break;
+                this.crossbarConnection.session.publish('action', {
+                    username: window.username,
+                    direction: 'right',
+                    pressed: true
+                });
+                
+                break;
 
-                case 39:
+            case ArrowKeysManager.KEY_RIGHT:
 
-                    this.crossbarConnection.session.publish('action', {
-                        username: window.username,
-                        direction: 'right',
-                        pressed: true
-                    });
-                    
-                    break;
-            }
-        };
+                this.crossbarConnection.session.publish('action', {
+                    username: window.username,
+                    direction: 'right',
+                    pressed: true
+                });
+                
+                break;
+        }
     }
 }
 
 module.exports = ArrowKeysManager;
-      

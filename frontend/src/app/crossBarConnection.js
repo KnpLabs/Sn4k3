@@ -24,4 +24,3 @@ connection.onclose = function (reason, details) {
 };
 
 module.exports = connection;
-      
