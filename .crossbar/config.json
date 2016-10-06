@@ -39,7 +39,7 @@
             "port": 7777
           },
           "paths": {
-            "snake": {
+            "sn4k3": {
               "type": "websocket"
             }
           }
