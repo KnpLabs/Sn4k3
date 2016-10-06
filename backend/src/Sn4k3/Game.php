@@ -2,11 +2,16 @@
 
 namespace Sn4k3;
 
+use Evenement\EventEmitterTrait;
 use React\EventLoop\LoopInterface;
 use Sn4k3\Model\Player;
 
 class Game
 {
+    const EVENT_TICK = 'event_tick';
+
+    use EventEmitterTrait;
+
     /**
      * In milliseconds.
      *
@@ -36,7 +41,7 @@ class Game
 
     /**
      * @param LoopInterface $loop
-     * @param null $tickInterval
+     * @param int|null $tickInterval
      */
     public function __construct(LoopInterface $loop, $tickInterval = null)
     {
@@ -58,7 +63,6 @@ class Game
         // Execute $this->tick() on every tick interval
         $this->loop->addPeriodicTimer($this->tickInterval / 1000, [$this, 'tick']);
         $this->isRunning = true;
-        $this->loop->run();
     }
 
     /**
@@ -78,6 +82,8 @@ class Game
         }
 
         echo 'I am a tick, please implement me', PHP_EOL;
+
+        $this->emit(self::EVENT_TICK, [$this]);
     }
 
     /**
@@ -143,5 +149,13 @@ class Game
         }
 
         throw new \InvalidArgumentException('No such player');
+    }
+
+    /**
+     * @return Model\Player[]
+     */
+    public function getPlayers()
+    {
+        return $this->players;
     }
 }

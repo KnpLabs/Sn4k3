@@ -24,6 +24,11 @@ class Player
      */
     public $score;
 
+    /**
+     * @param $direction
+     *
+     * @return bool
+     */
     public function canChangeDirection($direction)
     {
         switch ($direction) {
@@ -44,6 +49,9 @@ class Player
         }
     }
 
+    /**
+     * @param $direction
+     */
     public function changeDirection($direction)
     {
         if ($this->canChangeDirection($direction)) {
