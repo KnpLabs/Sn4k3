@@ -23,6 +23,14 @@ class CircleList implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
+     * @param Circle $circle
+     */
+    public function add(Circle $circle)
+    {
+        $this[] = $circle;
+    }
+
+    /**
      * @return Circle
      */
     public function first(): Circle

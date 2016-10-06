@@ -33,14 +33,6 @@ class Food implements PickableInterface
     /**
      * {@inheritdoc}
      */
-    public function collidesWith(CollisionableInterface $collisionable): bool
-    {
-        // TODO: Implement collides() method.
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function onPick(Snake $snake): void
     {
         $snake->length += $this->value;

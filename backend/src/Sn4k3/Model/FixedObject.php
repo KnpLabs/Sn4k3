@@ -2,6 +2,7 @@
 
 namespace Sn4k3\Model;
 
+use Sn4k3\Geometry\Circle;
 use Sn4k3\Geometry\CircleList;
 
 class FixedObject implements CollisionableInterface
@@ -11,6 +12,11 @@ class FixedObject implements CollisionableInterface
      */
     public $circle;
 
+    public function __construct(Circle $circle)
+    {
+        $this->circle = $circle;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -19,11 +25,4 @@ class FixedObject implements CollisionableInterface
         return new CircleList([$this->circle]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function collidesWith(CollisionableInterface $collisionable): bool
-    {
-        // TODO: Implement collides() method.
-    }
 }

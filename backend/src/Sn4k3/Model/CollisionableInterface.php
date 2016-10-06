@@ -10,11 +10,4 @@ interface CollisionableInterface
      * @return CircleList
      */
     public function getCircleList(): CircleList;
-
-    /**
-     * @param CollisionableInterface $collisionable
-     *
-     * @return bool
-     */
-    public function collidesWith(CollisionableInterface $collisionable): bool;
 }

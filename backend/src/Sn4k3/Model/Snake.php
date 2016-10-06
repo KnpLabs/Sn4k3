@@ -4,10 +4,13 @@ namespace Sn4k3\Model;
 
 use Sn4k3\Geometry\Circle;
 use Sn4k3\Geometry\CircleList;
-use Sn4k3\Math\CollisionsManager;
+use Sn4k3\Geometry\Point;
 
 class Snake implements CollisionableInterface
 {
+    const DEFAULT_HEAD_ANGLE = 0;
+    const DEFAULT_SPEED = 10;
+
     /**
      * @var Player
      */
@@ -29,7 +32,8 @@ class Snake implements CollisionableInterface
     public $length;
 
     /**
-     * From 0 to 360°
+     * From 0 to 360°.
+     * Represents the clock.
      *
      * @var int
      */
@@ -42,9 +46,26 @@ class Snake implements CollisionableInterface
      */
     public $direction;
 
-    public function __construct(CircleList $bodyParts)
+    /**
+     * The amount of pixels crossed on each tick.
+     *
+     * @var int
+     */
+    public $speed = 10;
+
+    public function __construct(int $speed = self::DEFAULT_SPEED, int $headAngle = self::DEFAULT_HEAD_ANGLE)
     {
-        $this->bodyParts = $bodyParts;
+        $this->bodyParts = new CircleList();
+        $this->speed = $speed;
+        $this->headAngle = $headAngle;
+    }
+
+    /**
+     * @param Circle $circle
+     */
+    public function addBodyPart(Circle $circle)
+    {
+        $this->bodyParts->add($circle);
     }
 
     /**
@@ -61,14 +82,17 @@ class Snake implements CollisionableInterface
     }
 
     /**
-     * @param CollisionableInterface $collisionable
-     *
-     * @return bool
+     * Using trigonometry to get coordinates of the next point.
      */
-    public function collidesWith(CollisionableInterface $collisionable): bool
+    public function calculateNextCoordinatePoint(): Point
     {
-        $myHead = $this->getHead();
+        $headPoint = $this->getCircleList()->first()->centerPoint;
 
-        return CollisionsManager::testCollisionablesCollision([$myHead], $collisionable);
+        $angleInRadians = deg2rad($this->headAngle);
+
+        $y = $headPoint->y + ($this->speed * cos($angleInRadians));
+        $x = $headPoint->x + ($this->speed * sin($angleInRadians));
+
+        return new Point(round($x), round($y));
     }
 }

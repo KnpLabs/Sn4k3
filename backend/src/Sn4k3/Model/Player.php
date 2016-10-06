@@ -4,6 +4,8 @@ namespace Sn4k3\Model;
 
 class Player
 {
+    const DEFAULT_TICK_INTERVAL = 10;
+
     /**
      * @var string
      */
@@ -23,6 +25,18 @@ class Player
      * @var int
      */
     public $score;
+
+    /**
+     * In degree.
+     *
+     * @var int
+     */
+    public $angleIntervalOnTick;
+
+    public function __construct(int $angleIntervalOnTick = self::DEFAULT_TICK_INTERVAL)
+    {
+        $this->angleIntervalOnTick = $angleIntervalOnTick;
+    }
 
     /**
      * @param $direction
@@ -50,9 +64,9 @@ class Player
     }
 
     /**
-     * @param $direction
+     * @param string $direction
      */
-    public function changeDirection($direction)
+    public function changeDirection(string $direction)
     {
         if ($this->canChangeDirection($direction)) {
             $this->snake->direction = $direction;

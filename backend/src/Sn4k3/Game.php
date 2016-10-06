@@ -46,6 +46,7 @@ class Game
     public function __construct(LoopInterface $loop, $tickInterval = null)
     {
         $this->loop = $loop;
+
         if (null !== $tickInterval) {
             $this->tickInterval = (int) $tickInterval;
         }

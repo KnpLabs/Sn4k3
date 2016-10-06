@@ -14,6 +14,10 @@ class Circle
      */
     public $radius;
 
+    /**
+     * @param Point $centerPoint
+     * @param int $radius
+     */
     public function __construct(Point $centerPoint, int $radius)
     {
         $this->centerPoint = $centerPoint;
