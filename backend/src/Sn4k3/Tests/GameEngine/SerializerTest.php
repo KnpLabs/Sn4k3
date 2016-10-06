@@ -1,5 +1,7 @@
 <?php
 
+namespace Sn4k3\Tests\GameEngine;
+
 use PHPUnit\Framework\TestCase;
 use React\EventLoop\Factory;
 use Sn4k3\Game;
@@ -7,23 +9,17 @@ use Sn4k3\Serializer;
 
 class SerializerTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function it_should_serialize_empty_game()
+    public function test it should serialize empty game()
     {
         $loop = Factory::create();
         $game = new Game($loop);
 
-        $this->assertEquals([
+        static::assertEquals([
             'players' => []
         ], Serializer::serializeGame($game));
     }
 
-    /**
-     * @test
-     */
-    public function it_should_serialize_game_with_players()
+    public function test it should serialize game with players()
     {
         $loop = Factory::create();
         $game = new Game($loop);
@@ -31,6 +27,6 @@ class SerializerTest extends TestCase
 
         $serialized = Serializer::serializeGame($game);
 
-        $this->assertEquals('Player1', $serialized['players'][0]['name']);
+        static::assertEquals('Player1', $serialized['players'][0]['name']);
     }
 }
