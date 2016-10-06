@@ -1,3 +1,5 @@
+const CrossbarConnection = require('./crossbarConnection');
+
 class SnakeArea {
     
     constructor(nodeId) {
@@ -6,15 +8,18 @@ class SnakeArea {
     }
 
     init() {
-        this.canvasDOM.setAttribute('width', 500); //set its width
-        this.canvasDOM.setAttribute('height', 500); //and height
-    }
+        this.canvasDOM.setAttribute('width', 800); //set its width
+        this.canvasDOM.setAttribute('height', 800); //and height
 
-    addFruit() {
-        this.drawingContext.fillStyle = '#fe57a1'; //hot pink!
-        this.drawingContext.fillRect(200, 200, 30, 50); //fill a rectangle (x, y, width, height)
+        CrossbarConnection.onopen = (session) => {
+            session.publish('join', [], {playerName: window.username});
+
+            session.subscribe('tick', (_, data) => {
+                console.log('Received tick: ');
+                console.log(data);
+            })
+        };
     }
-    
 }
 
 module.exports = SnakeArea;

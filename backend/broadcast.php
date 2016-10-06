@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-if (in_array($argv, '--mute')) {
+if (in_array('--mute', $argv)) {
     require_once __DIR__ . '/mute_logger.php';
 }
 
