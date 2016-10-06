@@ -13,6 +13,10 @@ composer install
 pip install crossbar
 ```
 
+:information_source: If you want to install it with docker, please follow this link:<br>
+http://crossbar.io/docs/Installation-on-Docker/
+
+
 # Execute
 
 Run backend crossbar instance
