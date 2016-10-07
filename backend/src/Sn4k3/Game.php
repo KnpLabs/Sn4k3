@@ -4,13 +4,22 @@ namespace Sn4k3;
 
 use Evenement\EventEmitterTrait;
 use React\EventLoop\LoopInterface;
+use Sn4k3\Model\Map;
 use Sn4k3\Model\Player;
 
 class Game
 {
+    const DEFAULT_TICK_INTERVAL = 1000;
+
     const EVENT_TICK = 'event_tick';
+    const EVENT_COLLISION = 'event_collision';
 
     use EventEmitterTrait;
+
+    /**
+     * @var Map
+     */
+    private $map;
 
     /**
      * In milliseconds.
@@ -42,14 +51,13 @@ class Game
     /**
      * @param LoopInterface $loop
      * @param int|null $tickInterval
+     * @param Map $map
      */
-    public function __construct(LoopInterface $loop, $tickInterval = null)
+    public function __construct(LoopInterface $loop, int $tickInterval = self::DEFAULT_TICK_INTERVAL, Map $map = null)
     {
         $this->loop = $loop;
-
-        if (null !== $tickInterval) {
-            $this->tickInterval = (int) $tickInterval;
-        }
+        $this->map = $map ?? new Map();
+        $this->tickInterval = $tickInterval;
     }
 
     /**
@@ -72,14 +80,30 @@ class Game
     public function tick()
     {
         while ($event = array_shift($this->awaitingEvents)) {
-            echo sprintf(
-                'Player %s changed direction to %s',
-                $event->player, $event->direction
-            ), PHP_EOL;
+            // Change the keyPress status on each event.
+            $event->getPlayer()->keyPressed = $event->isKeyPressed();
+            $event->getPlayer()->snake->direction = $event->getDirection();
+
+            // Just show a message in logs.
+            if ($event->isKeyPressed()) {
+                echo sprintf(
+                    'Player %s changed direction to %s.',
+                    $event->getPlayer(), $event->getDirection()
+                ), PHP_EOL;
+            } else {
+                echo sprintf(
+                    'Player %s is still moving forward.',
+                    $event->getPlayer()
+                ), PHP_EOL;
+            }
         }
 
         foreach ($this->players as $player) {
-            $player->makeMove();
+            $movementSuccessful = $player->snake->move();
+
+            if (!$movementSuccessful) {
+                $this->emit(self::EVENT_COLLISION, [$player]);
+            }
         }
 
         echo 'I am a tick, please implement me', PHP_EOL;
@@ -99,7 +123,7 @@ class Game
      * @param string $name
      * @param string $direction
      */
-    public function changeDirection(string $name, $direction)
+    public function changeDirection(string $name, string $direction)
     {
         $player = $this->getPlayerByName($name);
 
@@ -121,7 +145,7 @@ class Game
             return;
         }
 
-        $player = new Player();
+        $player = new Player($this->map);
         $player->hash = substr(md5(random_bytes(64)), 0, 16);
         $player->name = $name;
 
@@ -130,10 +154,11 @@ class Game
 
     /**
      * @param string $name
+     * @param bool $exceptional
      *
      * @return Player
      */
-    public function getPlayerByName(string $name, $exceptional = true)
+    public function getPlayerByName(string $name, bool $exceptional = true)
     {
         foreach ($this->players as $player) {
             if ($player->name === $name) {
@@ -166,5 +191,13 @@ class Game
     public function getPlayers()
     {
         return $this->players;
+    }
+
+    /**
+     * @return Map
+     */
+    public function getMap()
+    {
+        return $this->map;
     }
 }

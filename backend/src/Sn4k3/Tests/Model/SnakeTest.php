@@ -5,6 +5,7 @@ namespace Sn4k3\Tests\Model;
 use PHPUnit\Framework\TestCase;
 use Sn4k3\Geometry\Circle;
 use Sn4k3\Geometry\Point;
+use Sn4k3\Model\Map;
 use Sn4k3\Model\Snake;
 
 class SnakeTest extends TestCase
@@ -18,10 +19,10 @@ class SnakeTest extends TestCase
      */
     public function test calculation of next point(int $angle, int $expectedX, int $expectedY)
     {
-        $snake = new Snake();
+        $snake = new Snake(new Map());
         $snake->length = 1;
         $snake->headAngle = $angle;
-        $snake->addBodyPart(new Circle(new Point(0, 0), 5));
+        $snake->appendBodyPart(new Circle(new Point(0, 0), 5));
 
         $resultPoint = $snake->calculateNextCoordinatePoint();
 

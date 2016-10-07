@@ -9,10 +9,46 @@ class Event
     /**
      * @var Player
      */
-    public $player;
+    protected $player;
 
     /**
      * @var string
      */
-    public $direction;
+    protected $direction;
+
+    /**
+     * @var bool
+     */
+    protected $keyPressed;
+
+    public function __construct(Player $player, string $direction, bool $keyPressed)
+    {
+        $this->player = $player;
+        $this->direction = $direction;
+        $this->keyPressed = $keyPressed;
+    }
+
+    /**
+     * @return Player
+     */
+    public function getPlayer(): Player
+    {
+        return $this->player;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDirection(): string
+    {
+        return $this->direction;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isKeyPressed(): bool
+    {
+        return $this->keyPressed;
+    }
 }

@@ -31,7 +31,7 @@ class CircleListTest extends TestCase
     {
         $circleList = new CircleList();
 
-        $circle = new Circle(new Point(0, 0), 10);
+        $circle = new Circle(new Point(0, 0));
 
         $circleList['key'] = $circle;
 

@@ -25,9 +25,14 @@ class CircleList implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * @param Circle $circle
      */
-    public function add(Circle $circle)
+    public function append(Circle $circle)
     {
         $this[] = $circle;
+    }
+
+    public function prepend(Circle $circle)
+    {
+        array_unshift($this->circles, $circle);
     }
 
     /**
@@ -38,6 +43,16 @@ class CircleList implements \ArrayAccess, \Countable, \IteratorAggregate
         reset($this->circles);
 
         return current($this->circles);
+    }
+
+    /**
+     * @return Circle
+     */
+    public function last(): Circle
+    {
+        reset($this->circles);
+
+        return end($this->circles);
     }
 
     /**
@@ -93,6 +108,14 @@ class CircleList implements \ArrayAccess, \Countable, \IteratorAggregate
     public function count(): integer
     {
         return count($this->circles);
+    }
+
+    /**
+     * @return Circle|null
+     */
+    public function pop()
+    {
+        return array_pop($this->circles);
     }
 
     /**

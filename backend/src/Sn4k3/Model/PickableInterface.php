@@ -9,5 +9,5 @@ interface PickableInterface extends CollisionableInterface
      *
      * @return void
      */
-    public function onPick(Snake $snake): void;
+    public function onPick(Snake $snake);
 }
