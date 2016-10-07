@@ -95,7 +95,7 @@ class SnakeArea {
 
     for (const body_part of player.snake.body_parts) {
       const item = this.game.add.graphics(this.game.world.centerX, this.game.world.centerY);
-      const bodyPartColor = first ? HEAD_COLOR : BODY_COLOR ;
+      const bodyPartColor = first ? HEAD_COLOR : player.color || BODY_COLOR ;
 
       item.lineStyle(4, 0x000000, 1);
       item.drawCircle(
