@@ -4,12 +4,16 @@ namespace Sn4k3;
 
 use Evenement\EventEmitterTrait;
 use React\EventLoop\LoopInterface;
+use Sn4k3\Geometry\Circle;
+use Sn4k3\Geometry\Point;
+use Sn4k3\Model\Food;
 use Sn4k3\Model\Map;
 use Sn4k3\Model\Player;
 
 class Game
 {
     const DEFAULT_TICK_INTERVAL = 25;
+    const DEFAULT_FOOD_APPEARANCE_TICK = 20;
 
     const EVENT_TICK = 'event_tick';
     const EVENT_COLLISION = 'event_collision';
@@ -47,6 +51,11 @@ class Game
      * @var bool
      */
     private $isRunning = false;
+
+    /**
+     * @var int
+     */
+    private $foodTicks = self::DEFAULT_FOOD_APPEARANCE_TICK;
 
     /**
      * @param LoopInterface $loop
@@ -97,6 +106,26 @@ class Game
                     $event->getPlayer()->name
                 ), PHP_EOL;
             }
+        }
+
+        // Create food elements in the field
+        $this->foodTicks--;
+        if (0 <= $this->foodTicks) {
+            /** @var Player $randomPlayer */
+            $randomPlayer = array_rand($this->players);
+            $snakeHead = $randomPlayer->snake->getHead();
+
+            $newPoint = new Point(
+                $snakeHead->centerPoint->x + random_int(-100, 100),
+                $snakeHead->centerPoint->y + random_int(-100, 100)
+            );
+
+            $foodValueAndRadius = random_int(5, 30);
+            $food = new Food(new Circle($newPoint, $foodValueAndRadius), $foodValueAndRadius);
+
+            $this->map->foods[] = $food;
+
+            $this->foodTicks = self::DEFAULT_FOOD_APPEARANCE_TICK;
         }
 
         // Remove all players that have lost their snake.
