@@ -56,7 +56,7 @@ class Game
     public function __construct(LoopInterface $loop, int $tickInterval = self::DEFAULT_TICK_INTERVAL, Map $map = null)
     {
         $this->loop = $loop;
-        $this->map = null !== $map ? $map : new Map();
+        $this->map = $map ?? new Map();
         $this->tickInterval = $tickInterval;
     }
 
