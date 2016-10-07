@@ -5,7 +5,10 @@ const Phaser = global.Phaser = require('phaser/build/phaser');
 
 // App modules
 const CrossbarConnection = require('./crossbarConnection');
-const simpleWorldFixture = require('./fixtures/simple-world');
+
+const PLAYER_NAME_COLOR = '#FFFF00';//this is a text color: must be a hex string
+const HEAD_COLOR = 0xFF0000;
+const BODY_COLOR = 0xFFFFFF;
 
 class SnakeArea {
 
@@ -15,7 +18,7 @@ class SnakeArea {
   }
 
   init() {
-    this.game = new Phaser.Game(800, 800, Phaser.CANVAS, this.nodeId, {
+    this.game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.CANVAS, this.nodeId, {
       preload: this.preload.bind(this),
       create: this.create.bind(this),
       update: this.update.bind(this),
@@ -26,8 +29,6 @@ class SnakeArea {
       session.publish('join', [], {playerName: window.playerName});
 
       session.subscribe('tick', (_, data) => {
-        console.log('Received tick: ');
-        console.log(data);
         this.worldData = data;
       })
     };
@@ -55,8 +56,6 @@ class SnakeArea {
       this.game.camera.height,
       'bg'
     );
-
-    this.cursors = this.game.input.keyboard.createCursorKeys();
   }
 
   getCurrentUser() {
@@ -96,6 +95,7 @@ class SnakeArea {
 
     for (const body_part of player.snake.body_parts) {
       const item = this.game.add.graphics(this.game.world.centerX, this.game.world.centerY);
+      const bodyPartColor = first ? HEAD_COLOR : BODY_COLOR ;
 
       item.lineStyle(4, 0x000000, 1);
       item.drawCircle(
@@ -104,7 +104,7 @@ class SnakeArea {
         body_part.radius
       );
 
-      item.lineStyle(2, 0xffffff, 1);
+      item.lineStyle(2, bodyPartColor, 1);
       item.drawCircle(
         body_part.center_point.x,
         body_part.center_point.y,
@@ -115,23 +115,26 @@ class SnakeArea {
 
       if (first) {
         first = false;
-
-        var text = player.name;
-        var style = { font: "12px Arial", fill: "#000000", align: "center" };
-
-        var t = this.game.add.text(
-          0,
-          0,
-          text,
-          style
-        );
-
-        t.x = this.game.world.centerX + body_part.center_point.x - (t.width / 2);
-        t.y = this.game.world.centerY + body_part.center_point.y - 25;
-
-        this.snakes.add(t);
+        this.addPlayerName(player.name, body_part.center_point.x, body_part.center_point.y);
       }
     }
+  }
+
+  addPlayerName(name, x, y) {
+    var text = name;
+    var style = { font: "12px Arial", fill: PLAYER_NAME_COLOR, align: "center" };
+
+    var t = this.game.add.text(
+        0,
+        0,
+        text,
+        style
+    );
+
+    t.x = this.game.world.centerX + x - (t.width / 2);
+    t.y = this.game.world.centerY + y - 25;
+
+    this.snakes.add(t);
   }
 }
 

@@ -4,7 +4,7 @@ console.log("Running AutobahnJS " + autobahn.version);
 
 // the URL of the WAMP Router (Crossbar.io)
 //
-var wsuri = "ws://" + window.location.host + ":7777/sn4k3";
+var wsuri = "ws://" + window.location.hostname + ":7777/sn4k3";
 
 // the WAMP connection to the Router
 //
