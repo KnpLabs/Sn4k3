@@ -96,15 +96,15 @@ class Game
 
             // Just show a message in logs.
             if ($event->isKeyPressed()) {
-                echo sprintf(
-                    'Player %s changed direction to %s.',
-                    $event->getPlayer()->name, $event->getDirection()
-                ), PHP_EOL;
+//                echo sprintf(
+//                    'Player %s changed direction to %s.',
+//                    $event->getPlayer()->name, $event->getDirection()
+//                ), PHP_EOL;
             } else {
-                echo sprintf(
-                    'Player %s is still moving forward.',
-                    $event->getPlayer()->name
-                ), PHP_EOL;
+//                echo sprintf(
+//                    'Player %s is still moving forward.',
+//                    $event->getPlayer()->name
+//                ), PHP_EOL;
             }
         }
 
@@ -131,10 +131,19 @@ class Game
 
             $foodValueAndRadius = random_int(15, 100);
             $food = new Food(new Circle($newPoint, $foodValueAndRadius), ceil($foodValueAndRadius / 5));
+            $food->lifetime = random_int(100, 500);
 
             $this->map->foods[] = $food;
 
             $this->foodTicks = self::DEFAULT_FOOD_APPEARANCE_TICK;
+        }
+
+        foreach ($this->map->foods as $food) {
+            $food->lifetime--;
+
+            if ($food->lifetime === 0) {
+                unset($this->map->foods[array_search($food, $this->map->foods)]);
+            }
         }
 
         // Remove all players that have lost their snake.

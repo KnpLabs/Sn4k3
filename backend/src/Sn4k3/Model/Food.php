@@ -19,6 +19,11 @@ class Food implements PickableInterface
      */
     public $value;
 
+    /**
+     * @var int
+     */
+    public $lifetime;
+
     public function __construct(Circle $circle, int $value = self::DEFAULT_VALUE)
     {
         $this->circle = $circle;
