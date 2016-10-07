@@ -70,8 +70,15 @@ class SnakeArea {
     this.snakes && this.snakes.destroy();
     this.snakes = this.game.add.group();
 
+    this.foods && this.snakes.destroy();
+    this.foods = this.game.add.group();
+
     for (const player of this.worldData.players) {
       this.drawSnake(player);
+    }
+
+    for (const food of this.worldData.foods) {
+      this.drawFood(food);
     }
 
     var currentUser = this.getCurrentUser();
@@ -131,6 +138,17 @@ class SnakeArea {
         }
       }
     }
+  }
+
+  drawFood(food) {
+    const item = this.game.add.graphics(this.game.world.centerX, this.game.world.centerY);
+
+    item.lineStyle(4, 0x37b714, 1);
+    item.drawCircle(
+      food.center_point.x,
+      food.center_point.y,
+      food.radius
+    );
   }
 
   addPlayerName(name, x, y) {
