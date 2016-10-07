@@ -28,11 +28,6 @@ class Player
      */
     public $score = 0;
 
-    public function __construct()
-    {
-        $this->snake = new Snake(new CircleList());
-    }
-
     /**
      * In degree.
      *
@@ -42,6 +37,7 @@ class Player
 
     public function __construct(int $angleIntervalOnTick = self::DEFAULT_TICK_INTERVAL)
     {
+        $this->snake = new Snake(new CircleList());
         $this->angleIntervalOnTick = $angleIntervalOnTick;
     }
 
