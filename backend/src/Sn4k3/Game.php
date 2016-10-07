@@ -13,7 +13,7 @@ use Sn4k3\Model\Player;
 class Game
 {
     const DEFAULT_TICK_INTERVAL = 25;
-    const DEFAULT_FOOD_APPEARANCE_TICK = 100;
+    const DEFAULT_FOOD_APPEARANCE_TICK = 50;
 
     const EVENT_TICK = 'event_tick';
     const EVENT_COLLISION = 'event_collision';
