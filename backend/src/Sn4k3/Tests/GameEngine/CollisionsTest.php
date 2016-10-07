@@ -15,16 +15,16 @@ class CollisionsTest extends TestCase
 {
     public function test two distants circles dont collide()
     {
-        $circleA = new Circle(new Point(0, 0), 10);
-        $circleB = new Circle(new Point(100, 100), 10);
+        $circleA = new Circle(new Point(0, 0));
+        $circleB = new Circle(new Point(100, 100));
 
         static::assertFalse(CollisionsManager::testCirclesCollision($circleA, $circleB));
     }
 
     public function test two near circles do collide()
     {
-        $circleA = new Circle(new Point(0, 0), 10);
-        $circleB = new Circle(new Point(12, 12), 10);
+        $circleA = new Circle(new Point(0, 0));
+        $circleB = new Circle(new Point(12, 12));
 
         static::assertTrue(CollisionsManager::testCirclesCollision($circleA, $circleB));
     }
@@ -57,7 +57,7 @@ class CollisionsTest extends TestCase
         $snake->appendBodyPart(new Circle(new Point(0, 0), 5));
         $snake->appendBodyPart(new Circle(new Point(-4, -4), 5));
 
-        $fixedObject = new FixedObject(new Circle(new Point(6, 6), 10));
+        $fixedObject = new FixedObject(new Circle(new Point(6, 6)));
 
         static::assertTrue(CollisionsManager::testCollisionablesCollision($snake, $fixedObject));
     }

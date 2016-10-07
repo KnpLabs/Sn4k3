@@ -7,7 +7,6 @@ use Sn4k3\Geometry\Circle;
 use Sn4k3\Geometry\Point;
 use Sn4k3\Model\Food;
 use Sn4k3\Model\Map;
-use Sn4k3\Model\Player;
 use Sn4k3\Model\Snake;
 
 class FoodTest extends TestCase
@@ -16,7 +15,7 @@ class FoodTest extends TestCase
     {
         $map = new Map();
 
-        $food = new Food(new Circle(new Point(0, 0), 0));
+        $food = new Food(new Circle(new Point(0, 0)));
         $map->foods[] = $food;
 
         $snake = new Snake($map);
