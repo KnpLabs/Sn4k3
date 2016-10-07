@@ -11,7 +11,7 @@ class Snake implements CollisionableInterface
 {
     const DEFAULT_HEAD_ANGLE = 0; // In degrees.
     const DEFAULT_HEAD_ANGLE_TICK = 10; // In degrees.
-    const DEFAULT_SPEED = 6; // In pixels.
+    const DEFAULT_SPEED = 10; // In pixels.
     const DEFAULT_LENGTH = 20; // In terms of "body parts"
 
     /**
