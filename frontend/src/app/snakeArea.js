@@ -111,11 +111,24 @@ class SnakeArea {
         body_part.radius
       );
 
-      this.snakes.add(item);
+      if (player.snake.destroyed) {
+        this.game.add.tween(item.scale)
+          .to( {x: 1.2, y: 1.2}, 1000, Phaser.Easing.Back.InOut, true, 0, false)
+          .yoyo(true);
 
-      if (first) {
-        first = false;
-        this.addPlayerName(player.name, body_part.center_point.x, body_part.center_point.y);
+        this.game.add.tween(item)
+          .to({alpha: 0}, 1000, 'Linear', true, 0, false);
+
+        setTimeout(() => {
+          item.destroy();
+        }, 1000);
+      } else {
+        this.snakes.add(item);
+
+        if (first) {
+          first = false;
+          this.addPlayerName(player.name, body_part.center_point.x, body_part.center_point.y);
+        }
       }
     }
   }
