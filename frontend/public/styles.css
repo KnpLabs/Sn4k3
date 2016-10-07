@@ -1,5 +1,4 @@
-canvas {
-    border: 1px solid red;
-    display: block;
-    margin: auto;
+html, body {
+    margin: 0;
 }
+
