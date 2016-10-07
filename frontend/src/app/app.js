@@ -9,7 +9,12 @@ CrossbarConnection.open();
 
 $(document).ready(() => {
     try {
-        window.playerName = prompt('Please enter your username: ');
+        if (!window.localStorage.getItem('playerName')) {
+            window.playerName = prompt('Please enter your username: ');
+            window.localStorage.setItem('playerName', window.playerName);
+        } else {
+            window.playerName = window.localStorage.getItem('playerName');
+        }
 
         // Init Area
         var playArea = new SnakeArea('snake-area');
