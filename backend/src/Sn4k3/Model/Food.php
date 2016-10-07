@@ -7,6 +7,8 @@ use Sn4k3\Geometry\CircleList;
 
 class Food implements PickableInterface
 {
+    const DEFAULT_VALUE = 5;
+
     /**
      * @var Circle
      */
@@ -17,9 +19,10 @@ class Food implements PickableInterface
      */
     public $value;
 
-    public function __construct(Circle $circle)
+    public function __construct(Circle $circle, int $value = self::DEFAULT_VALUE)
     {
         $this->circle = $circle;
+        $this->value = $value;
     }
 
     /**
@@ -33,8 +36,12 @@ class Food implements PickableInterface
     /**
      * {@inheritdoc}
      */
-    public function onPick(Snake $snake): void
+    public function onPick(Snake $snake)
     {
         $snake->length += $this->value;
+
+        $foodIndex = array_search($this, $snake->map->foods, true);
+
+        unset($snake->map->foods[$foodIndex]);
     }
 }
