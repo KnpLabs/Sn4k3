@@ -117,9 +117,6 @@ class Snake implements CollisionableInterface
         $y = $headPoint->y + ($this->speed * cos($angleInRadians));
         $x = $headPoint->x + ($this->speed * sin($angleInRadians));
 
-        var_dump(($this->speed * cos($angleInRadians)));
-        var_dump($headPoint->y);
-
         return new Point(round($x), round($y));
     }
 
@@ -178,14 +175,11 @@ class Snake implements CollisionableInterface
      */
     public function changeHeadAngle()
     {
-        var_dump($this);
         if ($this->player->keyPressed) {
             // Will help handle positive or negative angles.
             $directionRatio = $this->direction === Player::DIRECTION_LEFT ? -1 : 1;
 
             $this->headAngle += ($directionRatio * self::DEFAULT_HEAD_ANGLE_TICK);
-
-            var_dump($this->headAngle);
 
             return true;
         }

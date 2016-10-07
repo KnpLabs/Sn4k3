@@ -9,7 +9,7 @@ use Sn4k3\Model\Player;
 
 class Game
 {
-    const DEFAULT_TICK_INTERVAL = 1000;
+    const DEFAULT_TICK_INTERVAL = 50;
 
     const EVENT_TICK = 'event_tick';
     const EVENT_COLLISION = 'event_collision';
@@ -88,12 +88,12 @@ class Game
             if ($event->isKeyPressed()) {
                 echo sprintf(
                     'Player %s changed direction to %s.',
-                    $event->getPlayer(), $event->getDirection()
+                    $event->getPlayer()->name, $event->getDirection()
                 ), PHP_EOL;
             } else {
                 echo sprintf(
                     'Player %s is still moving forward.',
-                    $event->getPlayer()
+                    $event->getPlayer()->name
                 ), PHP_EOL;
             }
         }

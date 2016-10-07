@@ -23,7 +23,7 @@ class SnakeArea {
     });
 
     CrossbarConnection.onopen = (session) => {
-      session.publish('join', [], {playerName: window.username});
+      session.publish('join', [], {playerName: window.playerName});
 
       session.subscribe('tick', (_, data) => {
         console.log('Received tick: ');
@@ -61,7 +61,7 @@ class SnakeArea {
 
   getCurrentUser() {
     for (const player of this.worldData.players) {
-      if (player.name === window.username) {
+      if (player.name === window.playerName) {
         return player;
       }
     }

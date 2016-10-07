@@ -9,7 +9,7 @@ CrossbarConnection.open();
 
 $(document).ready(() => {
     try {
-        window.username = prompt('Please enter your username: ');
+        window.playerName = prompt('Please enter your username: ');
 
         // Init Area
         var playArea = new SnakeArea('snake-area');

@@ -55,7 +55,7 @@ class Application
 
         $promise->then(function (ClientSession $session) {
             $session->subscribe(self::EVENT_INCOMING_ACTION, function ($_, $args) {
-                if (!isset($args->playerName, $args->direction)) {
+                if (!isset($args->playerName)) {
                     return;
                 }
 

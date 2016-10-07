@@ -4,7 +4,7 @@ const KEY_RIGHT = 39;
 class ArrowKeysManager {
 
     constructor(CrossbarConnection) {
-
+        this.isHold = false;
         this.crossbarConnection = CrossbarConnection;
     }
 
@@ -14,13 +14,16 @@ class ArrowKeysManager {
     }
 
     handleKeyUp(e) {
+        if (!this.isHold) {
+            return;
+        }
+
         switch (e.keyCode) {
             case KEY_LEFT:
-
                 // Publish on topic "action" to broadcast
                 // and tell to others client to draw the circles
                 this.crossbarConnection.session.publish('action', [], {
-                    username: window.username,
+                    playerName: window.playerName,
                     direction: 'left',
                     pressed: false
                 });
@@ -30,21 +33,26 @@ class ArrowKeysManager {
             case KEY_RIGHT:
 
                 this.crossbarConnection.session.publish('action', [], {
-                    username: window.username,
+                    playerName: window.playerName,
                     direction: 'right',
                     pressed: false
                 });
 
                 break;
         }
+
+        this.isHold = false;
     }
 
     handleKeyDown(e) {
+        if (this.isHold) {
+            return;
+        }
+
         switch (e.keyCode) {
             case KEY_LEFT:
-
                 this.crossbarConnection.session.publish('action', [], {
-                    username: window.username,
+                    playerName: window.playerName,
                     direction: 'left',
                     pressed: true
                 });
@@ -54,13 +62,15 @@ class ArrowKeysManager {
             case KEY_RIGHT:
 
                 this.crossbarConnection.session.publish('action', [], {
-                    username: window.username,
+                    playerName: window.playerName,
                     direction: 'right',
                     pressed: true
                 });
 
                 break;
         }
+
+        this.isHold = true;
     }
 }
 
