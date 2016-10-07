@@ -77,7 +77,7 @@ class SnakeArea {
       this.drawSnake(player);
     }
 
-    for (const food of this.worldData.foods) {
+    for (const food of this.worldData.map.foods) {
       this.drawFood(food);
     }
 
@@ -145,9 +145,9 @@ class SnakeArea {
 
     item.lineStyle(4, 0x37b714, 1);
     item.drawCircle(
-      food.center_point.x,
-      food.center_point.y,
-      food.radius
+      food.center.x,
+      food.center.y,
+      food.value
     );
   }
 
