@@ -110,9 +110,10 @@ class Game
 
         // Create food elements in the field
         $this->foodTicks--;
-        if (0 <= $this->foodTicks && count($this->players)) {
+        if ($this->foodTicks <= 0 && count($this->players)) {
             /** @var Player $randomPlayer */
             $randomPlayer = $this->players[array_rand($this->players)];
+
             $snakeHead = $randomPlayer->snake->getHead();
 
             $newPoint = new Point(
