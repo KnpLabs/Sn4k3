@@ -1,7 +1,7 @@
 module.exports = {
     players: [
         {
-            name: 'Ivan',
+            name: 'kek',
             snake: {
                 direction: 'left',
                 head_angle: 30,
