@@ -13,7 +13,7 @@ const BODY_COLOR = 0xFFFFFF;
 class SnakeArea {
 
   constructor(nodeId) {
-    this.worldData = {players: []};
+    this.worldData = {players: [], map: {foods: []}};
     this.nodeId = nodeId;
   }
 
