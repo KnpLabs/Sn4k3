@@ -13,7 +13,7 @@ class Snake implements CollisionableInterface
      * Angles are in degrees.
      */
     const DEFAULT_HEAD_ANGLE = 0;
-    const DEFAULT_HEAD_ANGLE_TICK = 10;
+    const DEFAULT_HEAD_ANGLE_TICK = 20;
     const DEFAULT_AUTOGROW_NUMBER = 5;
 
     /**
@@ -144,8 +144,6 @@ class Snake implements CollisionableInterface
             $newPoint = $this->calculateNextCoordinatePoint();
             $numberOfBodyParts = $this->bodyParts->count();
 
-            //var_dump($newPoint);
-
             // Handle body parts movement.
             if ($this->length > $numberOfBodyParts) {
                 // If we have more length than actual body parts,
@@ -177,7 +175,7 @@ class Snake implements CollisionableInterface
     {
         if ($this->player->keyPressed) {
             // Will help handle positive or negative angles.
-            $directionRatio = $this->direction === Player::DIRECTION_LEFT ? -1 : 1;
+            $directionRatio = $this->direction === Player::DIRECTION_LEFT ? 1 : -1;
 
             $this->headAngle += ($directionRatio * self::DEFAULT_HEAD_ANGLE_TICK);
 
