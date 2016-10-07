@@ -75,9 +75,14 @@ class Snake implements CollisionableInterface
 
     public function __construct(Map $map, Player $player, int $speed = self::DEFAULT_SPEED, int $headAngle = self::DEFAULT_HEAD_ANGLE)
     {
+        $randomPosition = new Circle(new Point(
+            random_int(-300, 300),
+            random_int(-300, 300)
+        ));
+
         $this->bodyParts = new CircleList();
         $this->player = $player;
-        $this->bodyParts[] = new Circle(new Point(0, 0));
+        $this->bodyParts[] = $randomPosition;
         $this->speed = $speed;
         $this->headAngle = $headAngle;
         $this->map = $map;
