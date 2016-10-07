@@ -45,7 +45,7 @@ class ArrowKeysManager {
 
                 this.crossbarConnection.session.publish('action', [], {
                     username: window.username,
-                    direction: 'right',
+                    direction: 'left',
                     pressed: true
                 });
 
