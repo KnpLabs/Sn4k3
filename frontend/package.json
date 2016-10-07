@@ -4,12 +4,17 @@
   "description": "Snake fights fuck yeah",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "NODE_PATH=frontend/src:frontend/node_modules browserify src/app/app.js -o public/bundle.js",
+    "watch": "NODE_PATH=frontend/src:frontend/node_modules watchify src/app/app.js -o public/bundle.js -v"
   },
   "author": "Sn4k3 Team",
   "license": "ISC",
   "dependencies": {
     "autobahn": "^0.10.1",
     "jquery": "^3.1.1"
+  },
+  "dev-dependencies": {
+    "browserify": "^13.1.0",
+    "watchify": "^3.7.0"
   }
 }
