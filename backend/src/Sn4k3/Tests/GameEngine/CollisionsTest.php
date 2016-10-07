@@ -8,6 +8,7 @@ use Sn4k3\Geometry\Point;
 use Sn4k3\Math\CollisionsManager;
 use Sn4k3\Model\FixedObject;
 use Sn4k3\Model\Food;
+use Sn4k3\Model\Map;
 use Sn4k3\Model\Snake;
 
 class CollisionsTest extends TestCase
@@ -30,7 +31,7 @@ class CollisionsTest extends TestCase
 
     public function test snake and far food dont collide()
     {
-        $snake = new Snake();
+        $snake = new Snake(new Map());
         $snake->addBodyPart(new Circle(new Point(0, 0), 5));
         $snake->addBodyPart(new Circle(new Point(-4, -4), 5));
 
@@ -41,7 +42,7 @@ class CollisionsTest extends TestCase
 
     public function test snake and near food do collide()
     {
-        $snake = new Snake();
+        $snake = new Snake(new Map());
         $snake->addBodyPart(new Circle(new Point(0, 0), 5));
         $snake->addBodyPart(new Circle(new Point(-4, -4), 5));
 
@@ -52,7 +53,7 @@ class CollisionsTest extends TestCase
 
     public function test snake and fixed object do collide()
     {
-        $snake = new Snake();
+        $snake = new Snake(new Map());
         $snake->addBodyPart(new Circle(new Point(0, 0), 5));
         $snake->addBodyPart(new Circle(new Point(-4, -4), 5));
 
@@ -63,11 +64,11 @@ class CollisionsTest extends TestCase
 
     public function test close snakes do collide()
     {
-        $snakeA = new Snake();
+        $snakeA = new Snake(new Map());
         $snakeA->addBodyPart(new Circle(new Point(0, 0), 5));
         $snakeA->addBodyPart(new Circle(new Point(-4, -4), 5));
 
-        $snakeB = new Snake();
+        $snakeB = new Snake(new Map());
         $snakeB->addBodyPart(new Circle(new Point(2, 2), 5));
         $snakeB->addBodyPart(new Circle(new Point(6, 6), 5));
 
