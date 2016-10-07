@@ -62,6 +62,11 @@ class Snake implements CollisionableInterface
     public $map;
 
     /**
+     * @var bool
+     */
+    public $destroyed = false;
+
+    /**
      * First body part is the head, last is the tail.
      *
      * @var CircleList
@@ -204,7 +209,7 @@ class Snake implements CollisionableInterface
     }
 
     /**
-     * Will check if collides with snakes or fixed objects.
+     * Checks if the snake's head is colliding with any other snake.
      *
      * @return bool
      */

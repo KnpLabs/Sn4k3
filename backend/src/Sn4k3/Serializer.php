@@ -11,7 +11,7 @@ class Serializer
     public static function serializeGame(Game $game) : array
     {
         return [
-            'players' => self::serializePlayers($game->getPlayers())
+            'players' => self::serializePlayers($game->getPlayers()),
         ];
     }
 
@@ -36,7 +36,8 @@ class Serializer
             'direction' => $snake->direction,
             'head_angle' => $snake->headAngle,
             'length' => $snake->length,
-            'body_parts' => self::serializeBodyParts($snake->getCircleList())
+            'body_parts' => self::serializeBodyParts($snake->getCircleList()),
+            'destroyed' => $snake->destroyed,
         ];
     }
 
@@ -47,7 +48,7 @@ class Serializer
         foreach ($bodyParts as $part) {
             $data[] = [
                 'center_point' => static::serializePoint($part->centerPoint),
-                'radius' => $part->radius
+                'radius' => $part->radius,
             ];
         }
 
@@ -58,7 +59,7 @@ class Serializer
     {
         return [
             'x' => $point->x,
-            'y' => $point->y
+            'y' => $point->y,
         ];
     }
 }

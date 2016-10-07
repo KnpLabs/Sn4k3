@@ -79,6 +79,7 @@ class Game
      */
     public function tick()
     {
+        // Execute all events in the queue.
         while ($event = array_shift($this->awaitingEvents)) {
             // Change the keyPress status on each event.
             $event->getPlayer()->keyPressed = $event->isKeyPressed();
@@ -98,11 +99,25 @@ class Game
             }
         }
 
+        // Remove all players that have lost their snake.
+        foreach ($this->players as $k => $player) {
+            if ($player->snake->destroyed) {
+                echo sprintf(
+                    'Player %s has lost!',
+                    $player->name
+                );
+                $snakeIndex = array_search($player->snake, $this->map->snakes, true);
+                unset($this->players[$k], $this->map->snakes[$snakeIndex]);
+            }
+        }
+
+        // Move each snake.
         foreach ($this->players as $player) {
             $movementSuccessful = $player->snake->move();
 
             if (!$movementSuccessful) {
                 $this->emit(self::EVENT_COLLISION, [$player]);
+                $player->snake->destroyed = true;
             }
         }
 
