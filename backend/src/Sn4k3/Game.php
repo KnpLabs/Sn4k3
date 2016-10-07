@@ -72,10 +72,17 @@ class Game
     public function tick()
     {
         while ($event = array_shift($this->awaitingEvents)) {
-            echo sprintf(
-                'Player %s changed direction to %s',
-                $event->player, $event->direction
-            ), PHP_EOL;
+            if ($event->isKeyPressed()) {
+                echo sprintf(
+                    'Player %s changed direction to %s.',
+                    $event->getPlayer(), $event->getDirection()
+                ), PHP_EOL;
+            } else {
+                echo sprintf(
+                    'Player %s is still moving forward.',
+                    $event->getPlayer()
+                ), PHP_EOL;
+            }
         }
 
         foreach ($this->players as $player) {
