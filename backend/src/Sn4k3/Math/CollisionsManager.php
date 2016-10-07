@@ -41,6 +41,11 @@ final class CollisionsManager
         $deltaX = $circleA->centerPoint->x - $circleB->centerPoint->x;
         $deltaY = $circleA->centerPoint->y - $circleB->centerPoint->y;
 
+        // First naive guess.
+        if ($deltaX > 100 || $deltaY > 100) {
+            return false;
+        }
+
         $distance = sqrt(pow($deltaX, 2) + pow($deltaY, 2));
 
         $radiusSum = $circleA->radius + $circleB->radius;
