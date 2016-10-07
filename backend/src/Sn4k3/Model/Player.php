@@ -75,9 +75,4 @@ class Player
             $this->snake->direction = $direction;
         }
     }
-
-    public function makeMove()
-    {
-
-    }
 }

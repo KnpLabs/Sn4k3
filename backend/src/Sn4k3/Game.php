@@ -79,7 +79,7 @@ class Game
         }
 
         foreach ($this->players as $player) {
-            $player->makeMove();
+            $player->snake->move();
         }
 
         echo 'I am a tick, please implement me', PHP_EOL;

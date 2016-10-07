@@ -95,4 +95,8 @@ class Snake implements CollisionableInterface
 
         return new Point(round($x), round($y));
     }
+
+    public function move()
+    {
+    }
 }
