@@ -53,6 +53,8 @@ class Player
         $this->map = $map;
         $this->angleIntervalOnTick = $angleIntervalOnTick;
         $this->snake = new Snake($map, $this);
+
+        $map->snakes[] = $this->snake;
     }
 
     /**

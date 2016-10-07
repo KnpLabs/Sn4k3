@@ -211,8 +211,15 @@ class Snake implements CollisionableInterface
     public function checkOtherCollisions()
     {
         foreach ($this->map->snakes as $snake) {
-            if (CollisionsManager::testCollisionablesCollision($this, $snake)) {
-                return true;
+            if ($snake !== $this) {
+                // Handle "other" snakes first.
+                if (CollisionsManager::testCollisionablesCollision($this, $snake)) {
+                    echo sprintf(
+                        '%s is colliding with %s',
+                        $this->player->name, $snake->player->name
+                    ), PHP_EOL;
+                    return true;
+                }
             }
         }
 
