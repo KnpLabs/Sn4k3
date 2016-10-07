@@ -74,16 +74,18 @@ class SnakeArea {
 
     var currentUser = this.getCurrentUser(worldData);
 
-    var headX = this.game.world.centerX + currentUser.snake.body_parts[0].center_point.x;
-    var headY = this.game.world.centerY + currentUser.snake.body_parts[0].center_point.y;
+    if (currentUser) {
+      var headX = this.game.world.centerX + currentUser.snake.body_parts[0].center_point.x;
+      var headY = this.game.world.centerY + currentUser.snake.body_parts[0].center_point.y;
 
-    this.game.camera.x = headX - (this.game.camera.width / 2);
-    this.game.camera.y = headY - (this.game.camera.height / 2);
+      this.game.camera.x = headX - (this.game.camera.width / 2);
+      this.game.camera.y = headY - (this.game.camera.height / 2);
 
-    this.bg.x = this.game.camera.x;
-    this.bg.y = this.game.camera.y;
-    this.bg.tilePosition.x = headX * -1;
-    this.bg.tilePosition.y = headY * -1;
+      this.bg.x = this.game.camera.x;
+      this.bg.y = this.game.camera.y;
+      this.bg.tilePosition.x = headX * -1;
+      this.bg.tilePosition.y = headY * -1;
+    }
   }
 
   drawSnake(player) {

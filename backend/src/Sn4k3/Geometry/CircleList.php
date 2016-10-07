@@ -38,21 +38,21 @@ class CircleList implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * @return Circle
      */
-    public function first(): Circle
+    public function first()
     {
         reset($this->circles);
 
-        return current($this->circles);
+        return current($this->circles) ?: null;
     }
 
     /**
      * @return Circle
      */
-    public function last(): Circle
+    public function last()
     {
         reset($this->circles);
 
-        return end($this->circles);
+        return end($this->circles) ?: null;
     }
 
     /**
@@ -105,7 +105,7 @@ class CircleList implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * {@inheritdoc}
      */
-    public function count(): integer
+    public function count(): int
     {
         return count($this->circles);
     }

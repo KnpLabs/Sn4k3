@@ -70,6 +70,7 @@ class Snake implements CollisionableInterface
     public function __construct(Map $map, int $speed = self::DEFAULT_SPEED, int $headAngle = self::DEFAULT_HEAD_ANGLE)
     {
         $this->bodyParts = new CircleList();
+        $this->bodyParts[] = new Circle(new Point(0, 0));
         $this->speed = $speed;
         $this->headAngle = $headAngle;
         $this->map = $map;
@@ -166,7 +167,7 @@ class Snake implements CollisionableInterface
      */
     public function changeHeadAngle()
     {
-        if ($this->player->keyPressed) {
+        if ($this->player && $this->player->keyPressed) {
             // Will help handle positive or negative angles.
             $directionRatio = $this->direction === Player::DIRECTION_LEFT ? -1 : 1;
 
