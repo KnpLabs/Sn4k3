@@ -32,8 +32,8 @@ class CollisionsTest extends TestCase
     public function test snake and far food dont collide()
     {
         $snake = new Snake(new Map());
-        $snake->addBodyPart(new Circle(new Point(0, 0), 5));
-        $snake->addBodyPart(new Circle(new Point(-4, -4), 5));
+        $snake->appendBodyPart(new Circle(new Point(0, 0), 5));
+        $snake->appendBodyPart(new Circle(new Point(-4, -4), 5));
 
         $food = new Food(new Circle(new Point(20, 20), 10));
 
@@ -43,8 +43,8 @@ class CollisionsTest extends TestCase
     public function test snake and near food do collide()
     {
         $snake = new Snake(new Map());
-        $snake->addBodyPart(new Circle(new Point(0, 0), 5));
-        $snake->addBodyPart(new Circle(new Point(-4, -4), 5));
+        $snake->appendBodyPart(new Circle(new Point(0, 0), 5));
+        $snake->appendBodyPart(new Circle(new Point(-4, -4), 5));
 
         $food = new Food(new Circle(new Point(6, 6), 10));
 
@@ -54,8 +54,8 @@ class CollisionsTest extends TestCase
     public function test snake and fixed object do collide()
     {
         $snake = new Snake(new Map());
-        $snake->addBodyPart(new Circle(new Point(0, 0), 5));
-        $snake->addBodyPart(new Circle(new Point(-4, -4), 5));
+        $snake->appendBodyPart(new Circle(new Point(0, 0), 5));
+        $snake->appendBodyPart(new Circle(new Point(-4, -4), 5));
 
         $fixedObject = new FixedObject(new Circle(new Point(6, 6), 10));
 
@@ -65,12 +65,12 @@ class CollisionsTest extends TestCase
     public function test close snakes do collide()
     {
         $snakeA = new Snake(new Map());
-        $snakeA->addBodyPart(new Circle(new Point(0, 0), 5));
-        $snakeA->addBodyPart(new Circle(new Point(-4, -4), 5));
+        $snakeA->appendBodyPart(new Circle(new Point(0, 0), 5));
+        $snakeA->appendBodyPart(new Circle(new Point(-4, -4), 5));
 
         $snakeB = new Snake(new Map());
-        $snakeB->addBodyPart(new Circle(new Point(2, 2), 5));
-        $snakeB->addBodyPart(new Circle(new Point(6, 6), 5));
+        $snakeB->appendBodyPart(new Circle(new Point(2, 2), 5));
+        $snakeB->appendBodyPart(new Circle(new Point(6, 6), 5));
 
         static::assertTrue(CollisionsManager::testCollisionablesCollision($snakeA, $snakeB));
     }

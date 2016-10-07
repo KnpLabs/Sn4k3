@@ -22,7 +22,7 @@ class SnakeTest extends TestCase
         $snake = new Snake(new Map());
         $snake->length = 1;
         $snake->headAngle = $angle;
-        $snake->addBodyPart(new Circle(new Point(0, 0), 5));
+        $snake->appendBodyPart(new Circle(new Point(0, 0), 5));
 
         $resultPoint = $snake->calculateNextCoordinatePoint();
 
