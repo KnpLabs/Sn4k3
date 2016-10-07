@@ -36,7 +36,7 @@ class Serializer
             'direction' => $snake->direction,
             'head_angle' => $snake->headAngle,
             'length' => $snake->length,
-            'body_parts' => self::serializeBodyParts($snake->bodyParts)
+            'body_parts' => self::serializeBodyParts($snake->getCircleList())
         ];
     }
 

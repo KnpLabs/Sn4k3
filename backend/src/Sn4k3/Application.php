@@ -46,6 +46,9 @@ class Application
         $this->loop->run();
     }
 
+    /**
+     * Handles the "INCOMING_ACTION" event from browser.
+     */
     private function listenIncomingMessages()
     {
         $promise = $this->webSocket->promiseSession();
@@ -56,15 +59,18 @@ class Application
                     return;
                 }
 
-                $event = new Event();
-                $event->player = $this->game->getPlayerByName($args->playerName);
-                $event->direction = $args->direction;
+                $player = $this->game->getPlayerByName($args->playerName);
+
+                $event = new Event($player, $args->direction, $args->pressed);
 
                 $this->game->addEvent($event);
             });
         });
     }
 
+    /**
+     * Handles the "JOIN" event received from browser.
+     */
     private function listenForNewPlayers()
     {
         $this->webSocket->promiseSession()->then(function (ClientSession $session) {
@@ -78,6 +84,9 @@ class Application
         });
     }
 
+    /**
+     * Sends the "TICK" event to the browser.
+     */
     private function broadcastTick()
     {
         $this->game->on(Game::EVENT_TICK, function () {
