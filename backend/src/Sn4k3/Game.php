@@ -12,6 +12,7 @@ class Game
     const DEFAULT_TICK_INTERVAL = 1000;
 
     const EVENT_TICK = 'event_tick';
+    const EVENT_COLLISION = 'event_collision';
 
     use EventEmitterTrait;
 
@@ -98,7 +99,11 @@ class Game
         }
 
         foreach ($this->players as $player) {
-            $player->snake->move();
+            $movementSuccessful = $player->snake->move();
+
+            if (!$movementSuccessful) {
+                $this->emit(self::EVENT_COLLISION, [$player]);
+            }
         }
 
         echo 'I am a tick, please implement me', PHP_EOL;
