@@ -4,13 +4,21 @@ namespace Sn4k3;
 
 use Evenement\EventEmitterTrait;
 use React\EventLoop\LoopInterface;
+use Sn4k3\Model\Map;
 use Sn4k3\Model\Player;
 
 class Game
 {
+    const DEFAULT_TICK_INTERVAL = 1000;
+
     const EVENT_TICK = 'event_tick';
 
     use EventEmitterTrait;
+
+    /**
+     * @var Map
+     */
+    private $map;
 
     /**
      * In milliseconds.
@@ -42,14 +50,13 @@ class Game
     /**
      * @param LoopInterface $loop
      * @param int|null $tickInterval
+     * @param Map $map
      */
-    public function __construct(LoopInterface $loop, $tickInterval = null)
+    public function __construct(LoopInterface $loop, int $tickInterval = self::DEFAULT_TICK_INTERVAL, Map $map = null)
     {
         $this->loop = $loop;
-
-        if (null !== $tickInterval) {
-            $this->tickInterval = (int) $tickInterval;
-        }
+        $this->map = null !== $map ? $map : new Map();
+        $this->tickInterval = $tickInterval;
     }
 
     /**
@@ -111,7 +118,7 @@ class Game
      * @param string $name
      * @param string $direction
      */
-    public function changeDirection(string $name, $direction)
+    public function changeDirection(string $name, string $direction)
     {
         $player = $this->getPlayerByName($name);
 
@@ -133,7 +140,7 @@ class Game
             return;
         }
 
-        $player = new Player();
+        $player = new Player($this->map);
         $player->hash = substr(md5(random_bytes(64)), 0, 16);
         $player->name = $name;
 
@@ -142,10 +149,11 @@ class Game
 
     /**
      * @param string $name
+     * @param bool $exceptional
      *
      * @return Player
      */
-    public function getPlayerByName(string $name, $exceptional = true)
+    public function getPlayerByName(string $name, bool $exceptional = true)
     {
         foreach ($this->players as $player) {
             if ($player->name === $name) {
@@ -178,5 +186,13 @@ class Game
     public function getPlayers()
     {
         return $this->players;
+    }
+
+    /**
+     * @return Map
+     */
+    public function getMap()
+    {
+        return $this->map;
     }
 }
