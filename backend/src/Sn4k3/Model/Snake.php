@@ -80,11 +80,13 @@ class Snake implements CollisionableInterface
             random_int(-300, 300)
         ));
 
+        $randomAngle = random_int(0, 360);
+
         $this->bodyParts = new CircleList();
         $this->player = $player;
         $this->bodyParts[] = $randomPosition;
         $this->speed = $speed;
-        $this->headAngle = $headAngle;
+        $this->headAngle = $headAngle !== 0 ?: $randomAngle;
         $this->map = $map;
     }
 
