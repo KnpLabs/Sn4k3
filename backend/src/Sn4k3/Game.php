@@ -26,7 +26,7 @@ class Game
      *
      * @var int
      */
-    private $tickInterval = 1000;
+    private $tickInterval;
 
     /**
      * @var Player[]
@@ -105,8 +105,6 @@ class Game
                 $this->emit(self::EVENT_COLLISION, [$player]);
             }
         }
-
-        echo 'I am a tick, please implement me', PHP_EOL;
 
         $this->emit(self::EVENT_TICK, [$this]);
     }

@@ -14,6 +14,7 @@ class Snake implements CollisionableInterface
      */
     const DEFAULT_HEAD_ANGLE = 0;
     const DEFAULT_HEAD_ANGLE_TICK = 10;
+    const DEFAULT_AUTOGROW_NUMBER = 5;
 
     /**
      * In pixels.
@@ -31,7 +32,7 @@ class Snake implements CollisionableInterface
      *
      * @var int
      */
-    public $length;
+    public $length = 1;
 
     /**
      * From 0 to 360°.
@@ -67,9 +68,10 @@ class Snake implements CollisionableInterface
      */
     protected $bodyParts;
 
-    public function __construct(Map $map, int $speed = self::DEFAULT_SPEED, int $headAngle = self::DEFAULT_HEAD_ANGLE)
+    public function __construct(Map $map, Player $player, int $speed = self::DEFAULT_SPEED, int $headAngle = self::DEFAULT_HEAD_ANGLE)
     {
         $this->bodyParts = new CircleList();
+        $this->player = $player;
         $this->bodyParts[] = new Circle(new Point(0, 0));
         $this->speed = $speed;
         $this->headAngle = $headAngle;
@@ -108,12 +110,15 @@ class Snake implements CollisionableInterface
      */
     public function calculateNextCoordinatePoint(): Point
     {
-        $headPoint = $this->getCircleList()->first()->centerPoint;
+        $headPoint = $this->getHead()->centerPoint;
 
         $angleInRadians = deg2rad($this->headAngle);
 
         $y = $headPoint->y + ($this->speed * cos($angleInRadians));
         $x = $headPoint->x + ($this->speed * sin($angleInRadians));
+
+        var_dump(($this->speed * cos($angleInRadians)));
+        var_dump($headPoint->y);
 
         return new Point(round($x), round($y));
     }
@@ -130,14 +135,19 @@ class Snake implements CollisionableInterface
      */
     public function move()
     {
+        if ($this->length < self::DEFAULT_AUTOGROW_NUMBER) {
+            $this->length++;
+        }
+
         $this->changeHeadAngle();
         $this->checkFoodCollisions();
         $collides = $this->checkOtherCollisions();
 
         if (!$collides) {
             $newPoint = $this->calculateNextCoordinatePoint();
-
             $numberOfBodyParts = $this->bodyParts->count();
+
+            //var_dump($newPoint);
 
             // Handle body parts movement.
             if ($this->length > $numberOfBodyParts) {
@@ -148,7 +158,8 @@ class Snake implements CollisionableInterface
                 // If length is same as body parts count,
                 //  we just move the tail to the beginning of the snake,
                 //  so the snake looks like it's moving, but we just moved one circle.
-                $this->bodyParts->append($this->bodyParts->pop());
+                $this->bodyParts->pop();
+                $this->bodyParts->prepend(new Circle($newPoint));
             }
 
             // Has moved successfully.
@@ -167,11 +178,14 @@ class Snake implements CollisionableInterface
      */
     public function changeHeadAngle()
     {
-        if ($this->player && $this->player->keyPressed) {
+        var_dump($this);
+        if ($this->player->keyPressed) {
             // Will help handle positive or negative angles.
             $directionRatio = $this->direction === Player::DIRECTION_LEFT ? -1 : 1;
 
             $this->headAngle += ($directionRatio * self::DEFAULT_HEAD_ANGLE_TICK);
+
+            var_dump($this->headAngle);
 
             return true;
         }

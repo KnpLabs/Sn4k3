@@ -2,6 +2,7 @@
 global.p2 = window.p2 = require('phaser/build/p2');
 global.PIXI = window.PIXI = require('phaser/build/pixi');
 const Phaser = global.Phaser = require('phaser/build/phaser');
+
 // App modules
 const CrossbarConnection = require('./crossbarConnection');
 const simpleWorldFixture = require('./fixtures/simple-world');
@@ -9,6 +10,7 @@ const simpleWorldFixture = require('./fixtures/simple-world');
 class SnakeArea {
 
   constructor(nodeId) {
+    this.worldData = {players: []};
     this.nodeId = nodeId;
   }
 
@@ -16,7 +18,7 @@ class SnakeArea {
     this.game = new Phaser.Game(800, 800, Phaser.CANVAS, this.nodeId, {
       preload: this.preload.bind(this),
       create: this.create.bind(this),
-      update: this.update.bind(this, simpleWorldFixture),
+      update: this.update.bind(this),
       render: this.render.bind(this)
     });
 
@@ -26,6 +28,7 @@ class SnakeArea {
       session.subscribe('tick', (_, data) => {
         console.log('Received tick: ');
         console.log(data);
+        this.worldData = data;
       })
     };
   }
@@ -56,23 +59,23 @@ class SnakeArea {
     this.cursors = this.game.input.keyboard.createCursorKeys();
   }
 
-  getCurrentUser(worldData) {
-    for (const player of worldData.players) {
+  getCurrentUser() {
+    for (const player of this.worldData.players) {
       if (player.name === window.username) {
         return player;
       }
     }
   }
 
-  update(worldData) {
+  update() {
     this.snakes && this.snakes.destroy();
     this.snakes = this.game.add.group();
 
-    for (const player of worldData.players) {
+    for (const player of this.worldData.players) {
       this.drawSnake(player);
     }
 
-    var currentUser = this.getCurrentUser(worldData);
+    var currentUser = this.getCurrentUser();
 
     if (currentUser) {
       var headX = this.game.world.centerX + currentUser.snake.body_parts[0].center_point.x;

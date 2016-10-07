@@ -118,6 +118,11 @@ class CircleList implements \ArrayAccess, \Countable, \IteratorAggregate
         return array_pop($this->circles);
     }
 
+    public function shift()
+    {
+        return array_shift($this->circles);
+    }
+
     /**
      * {@inheritdoc}
      */
