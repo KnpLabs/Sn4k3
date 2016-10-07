@@ -121,7 +121,7 @@ class Game
             );
 
             $foodValueAndRadius = random_int(5, 30);
-            $food = new Food(new Circle($newPoint, $foodValueAndRadius), $foodValueAndRadius);
+            $food = new Food(new Circle($newPoint, $foodValueAndRadius), ceil($foodValueAndRadius / 10));
 
             $this->map->foods[] = $food;
 
