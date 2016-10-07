@@ -2,10 +2,12 @@
 
 namespace Sn4k3\Geometry;
 
+use Sn4k3\Model\CollisionableInterface;
+
 /**
  * Just an array of Circle objects.
  */
-class CircleList implements \ArrayAccess, \Countable, \IteratorAggregate
+class CircleList implements CollisionableInterface, \ArrayAccess, \Countable, \IteratorAggregate
 {
     /**
      * @var Circle[]
@@ -118,6 +120,9 @@ class CircleList implements \ArrayAccess, \Countable, \IteratorAggregate
         return array_pop($this->circles);
     }
 
+    /**
+     * @return Circle|null
+     */
     public function shift()
     {
         return array_shift($this->circles);
@@ -129,5 +134,13 @@ class CircleList implements \ArrayAccess, \Countable, \IteratorAggregate
     public function getIterator()
     {
         return new \ArrayIterator($this->circles);
+    }
+
+    /**
+     * @return CircleList
+     */
+    public function getCircleList(): CircleList
+    {
+        return $this;
     }
 }

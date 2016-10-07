@@ -14,7 +14,7 @@ class Snake implements CollisionableInterface
      */
     const DEFAULT_HEAD_ANGLE = 0;
     const DEFAULT_HEAD_ANGLE_TICK = 20;
-    const DEFAULT_AUTOGROW_NUMBER = 5;
+    const DEFAULT_AUTOGROW_NUMBER = 25;
 
     /**
      * In pixels.
@@ -213,7 +213,34 @@ class Snake implements CollisionableInterface
         foreach ($this->map->snakes as $snake) {
             if ($snake !== $this) {
                 // Handle "other" snakes first.
-                if (CollisionsManager::testCollisionablesCollision($this, $snake)) {
+                $headCircleList = new CircleList([$this->getHead()]);
+                if (CollisionsManager::testCollisionablesCollision($headCircleList, $snake)) {
+                    echo sprintf(
+                        '%s is colliding with %s',
+                        $this->player->name, $snake->player->name
+                    ), PHP_EOL;
+                    return true;
+                }
+            } else {
+                // Handle self-collision.
+                // In this case, we remove the head and check collision between head & other parts of the body
+                $head = $this->getHead();
+                $headCircleList = new CircleList([$head]);
+
+                $body = new CircleList();
+
+                // Skip a fixed number of body parts to avoid constant collision.
+                $numberOfBodyPartsToSkip = 3;
+                $i = 0;
+                foreach ($this->bodyParts as $part) {
+                    if ($i < $numberOfBodyPartsToSkip) {
+                        $i++;
+                        continue;
+                    }
+                    $body->append($part);
+                }
+
+                if (CollisionsManager::testCollisionablesCollision($headCircleList, $body)) {
                     echo sprintf(
                         '%s is colliding with %s',
                         $this->player->name, $snake->player->name
