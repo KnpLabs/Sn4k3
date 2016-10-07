@@ -13,7 +13,7 @@ use Sn4k3\Model\Player;
 class Game
 {
     const DEFAULT_TICK_INTERVAL = 25;
-    const DEFAULT_FOOD_APPEARANCE_TICK = 20;
+    const DEFAULT_FOOD_APPEARANCE_TICK = 100;
 
     const EVENT_TICK = 'event_tick';
     const EVENT_COLLISION = 'event_collision';
@@ -116,13 +116,21 @@ class Game
 
             $snakeHead = $randomPlayer->snake->getHead();
 
+            $randomRange = function($start, $end, $min, $max) {
+                while ($random = random_int($start, $end)) {
+                    if ($random < $min || $random > $max) {
+                        return $random;
+                    }
+                }
+            };
+
             $newPoint = new Point(
-                $snakeHead->centerPoint->x + random_int(-100, 100),
-                $snakeHead->centerPoint->y + random_int(-100, 100)
+                $snakeHead->centerPoint->x + ($x = $randomRange(-500, 500, -100, 100)),
+                $snakeHead->centerPoint->y + ($y = $randomRange(-500, 500, -100, 100))
             );
 
-            $foodValueAndRadius = random_int(5, 30);
-            $food = new Food(new Circle($newPoint, $foodValueAndRadius), ceil($foodValueAndRadius / 10));
+            $foodValueAndRadius = random_int(15, 100);
+            $food = new Food(new Circle($newPoint, $foodValueAndRadius), ceil($foodValueAndRadius / 5));
 
             $this->map->foods[] = $food;
 

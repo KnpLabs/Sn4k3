@@ -70,7 +70,7 @@ class SnakeArea {
     this.snakes && this.snakes.destroy();
     this.snakes = this.game.add.group();
 
-    this.foods && this.snakes.destroy();
+    this.foods && this.foods.destroy();
     this.foods = this.game.add.group();
 
     for (const player of this.worldData.players) {
@@ -144,11 +144,14 @@ class SnakeArea {
     const item = this.game.add.graphics(this.game.world.centerX, this.game.world.centerY);
 
     item.lineStyle(4, 0x37b714, 1);
+
     item.drawCircle(
-      food.center.x,
-      food.center.y,
-      food.value
+      food.circle.center_point.x,
+      food.circle.center_point.y,
+      food.circle.radius
     );
+
+    this.foods.add(item);
   }
 
   addPlayerName(name, x, y) {
