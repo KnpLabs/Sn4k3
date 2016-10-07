@@ -111,6 +111,14 @@ class CircleList implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
+     * @return Circle|null
+     */
+    public function pop()
+    {
+        return array_pop($this->circles);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getIterator()
