@@ -9,17 +9,10 @@ use Sn4k3\Math\CollisionsManager;
 
 class Snake implements CollisionableInterface
 {
-    /**
-     * Angles are in degrees.
-     */
-    const DEFAULT_HEAD_ANGLE = 0;
-    const DEFAULT_HEAD_ANGLE_TICK = 20;
-    const DEFAULT_AUTOGROW_NUMBER = 25;
-
-    /**
-     * In pixels.
-     */
-    const DEFAULT_SPEED = 10;
+    const DEFAULT_HEAD_ANGLE = 0; // In degrees.
+    const DEFAULT_HEAD_ANGLE_TICK = 10; // In degrees.
+    const DEFAULT_SPEED = 6; // In pixels.
+    const DEFAULT_LENGTH = 20; // In terms of "body parts"
 
     /**
      * @var Player
@@ -142,7 +135,7 @@ class Snake implements CollisionableInterface
      */
     public function move()
     {
-        if ($this->length < self::DEFAULT_AUTOGROW_NUMBER) {
+        if ($this->length < self::DEFAULT_LENGTH) {
             $this->length++;
         }
 
