@@ -2,14 +2,21 @@
 
 namespace Sn4k3\Model;
 
-use Sn4k3\Geometry\CircleList;
-
 class Player
 {
     const DIRECTION_LEFT = 'left';
     const DIRECTION_RIGHT = 'right';
 
     const DEFAULT_TICK_INTERVAL = 10;
+
+    const AVAILABLE_COLORS = [
+       0xFF0000,
+       0xFFFF00,
+       0xFFFFFF,
+       0x00FFFF,
+       0x0000FF,
+       0x00FF00,
+    ];
 
     /**
      * @var string
@@ -20,6 +27,11 @@ class Player
      * @var string
      */
     public $name;
+
+    /**
+     * @var int
+     */
+    public $color;
 
     /**
      * @var Snake
@@ -53,6 +65,7 @@ class Player
         $this->map = $map;
         $this->angleIntervalOnTick = $angleIntervalOnTick;
         $this->snake = new Snake($map, $this);
+        $this->color = self::AVAILABLE_COLORS[array_rand(self::AVAILABLE_COLORS)];
 
         $map->snakes[] = $this->snake;
     }

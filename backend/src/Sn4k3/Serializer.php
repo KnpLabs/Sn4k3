@@ -4,6 +4,7 @@ namespace Sn4k3;
 
 use Sn4k3\Geometry\CircleList;
 use Sn4k3\Geometry\Point;
+use Sn4k3\Model\Player;
 use Sn4k3\Model\Snake;
 
 class Serializer
@@ -15,6 +16,11 @@ class Serializer
         ];
     }
 
+    /**
+     * @param Player[] $players
+     *
+     * @return array
+     */
     public static function serializePlayers(array $players) : array
     {
         $data = [];
@@ -22,6 +28,7 @@ class Serializer
         foreach ($players as $player) {
             $data[] = [
                 'name' => $player->name,
+                'color' => $player->color,
                 'snake' => self::serializeSnake($player->snake),
                 'score' => $player->score,
             ];
