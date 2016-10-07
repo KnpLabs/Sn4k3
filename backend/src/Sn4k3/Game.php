@@ -72,6 +72,11 @@ class Game
     public function tick()
     {
         while ($event = array_shift($this->awaitingEvents)) {
+            // Change the keyPress status on each event.
+            $event->getPlayer()->keyPressed = $event->isKeyPressed();
+            $event->getPlayer()->snake->direction = $event->getDirection();
+
+            // Just show a message in logs.
             if ($event->isKeyPressed()) {
                 echo sprintf(
                     'Player %s changed direction to %s.',
