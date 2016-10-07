@@ -3,6 +3,7 @@
 namespace Sn4k3;
 
 use Sn4k3\Geometry\CircleList;
+use Sn4k3\Geometry\Point;
 use Sn4k3\Model\Snake;
 
 class Serializer
@@ -45,11 +46,19 @@ class Serializer
 
         foreach ($bodyParts as $part) {
             $data[] = [
-                'center_point' => $part->centerPoint,
+                'center_point' => static::serializePoint($part->centerPoint),
                 'radius' => $part->radius
             ];
         }
 
         return $data;
+    }
+
+    public static function serializePoint(Point $point)
+    {
+        return [
+            'x' => $point->x,
+            'y' => $point->y
+        ];
     }
 }
