@@ -112,7 +112,7 @@ class Game
         $this->foodTicks--;
         if (0 <= $this->foodTicks) {
             /** @var Player $randomPlayer */
-            $randomPlayer = array_rand($this->players);
+            $randomPlayer = $this->players[array_rand($this->players)];
             $snakeHead = $randomPlayer->snake->getHead();
 
             $newPoint = new Point(
