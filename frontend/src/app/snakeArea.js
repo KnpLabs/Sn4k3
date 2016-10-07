@@ -44,7 +44,7 @@ class SnakeArea {
   }
 
   create() {
-    this.game.world.resize(10000, 10000);
+    this.game.world.resize(100000, 100000);
 
     this.game.camera.y = this.game.world.centerY - (this.game.camera.height / 2);
     this.game.camera.x = this.game.world.centerX - (this.game.camera.width / 2);
