@@ -30,7 +30,7 @@ function makeWorldDataFromNetworkData(lightNetworkData) {
             value: foodData[1],
         })
     }
-debugger
+
     return worldData;
 }
 
