@@ -279,6 +279,7 @@ class Snake extends AbstractCollisonable
     public function collide(CollisionableInterface $target)
     {
         if ($target instanceof Snake) {
+            $target->player->score += $this->player->score / 4;
             $this->player->score = 0;
         }
     }
