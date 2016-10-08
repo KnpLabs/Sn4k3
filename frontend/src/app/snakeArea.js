@@ -5,12 +5,7 @@ const Phaser = global.Phaser = require('phaser/build/phaser');
 
 // App modules
 const CrossbarConnection = require('./crossbarConnection');
-
 const PLAYER_NAME_COLOR = '#FFFF00';//this is a text color: must be a hex string
-const HEAD_COLOR = 0xFF0000;
-const BODY_COLOR = 0xFFFFFF;
-
-const simpleWorldFixture = require('./fixtures/simple-world');
 
 class SnakeArea {
 
@@ -41,6 +36,7 @@ class SnakeArea {
     this.game.load.image('bg', 'frontend/public/assets/bg.jpg');
     this.game.load.spritesheet('snek', 'frontend/public/assets/snakeswag.png', 32, 32, 21, 2);
     this.game.load.spritesheet('body', 'frontend/public/assets/body.png', 18, 14, 4);
+    this.game.load.spritesheet('fruits', 'frontend/public/assets/fruits.png', 60, 60, 12);
   }
 
   render() {
@@ -71,8 +67,6 @@ class SnakeArea {
   }
 
   update() {
-    //this.worldData = simpleWorldFixture;
-
     this.snakes && this.snakes.destroy();
     this.snakes = this.game.add.group();
 
@@ -113,74 +107,57 @@ class SnakeArea {
           this.game.world.centerX + body_part.center_point.x,
           this.game.world.centerY + body_part.center_point.y,
           'snek',
-          0
+          player.color
         );
 
-        item.anchor.set(0.5, 0.5);
-
-        first = false;
+        item.angle = 270 - player.snake.head_angle;
       } else {
         item = this.game.add.sprite(
           this.game.world.centerX + body_part.center_point.x,
           this.game.world.centerY + body_part.center_point.y,
           'body',
-          0
+          player.color
         );
-
-        item.anchor.set(0.5, 0.5);
       }
 
+      item.anchor.set(0.5, 0.5);
 
+      if (player.snake.destroyed) {
+        this.game.add.tween(item.scale)
+          .to( {x: 1.2, y: 1.2}, 1000, Phaser.Easing.Back.InOut, true, 0, false)
+          .yoyo(true);
 
-      item = this.game.add.graphics(this.game.world.centerX, this.game.world.centerY);
-      const bodyPartColor = first ? HEAD_COLOR : player.color || BODY_COLOR ;
+        this.game.add.tween(item)
+          .to({alpha: 0}, 1000, 'Linear', true, 0, false);
 
-      item.lineStyle(4, 0x000000, 1);
-      item.drawCircle(
-        body_part.center_point.x,
-        body_part.center_point.y,
-        body_part.radius
-      );
+        let destroy = (item) => {
+          item.destroy();
+        };
 
-      item.lineStyle(2, bodyPartColor, 1);
-      item.drawCircle(
-        body_part.center_point.x,
-        body_part.center_point.y,
-        body_part.radius
-      );
-      //
-      // if (player.snake.destroyed) {
-      //   this.game.add.tween(item.scale)
-      //     .to( {x: 1.2, y: 1.2}, 1000, Phaser.Easing.Back.InOut, true, 0, false)
-      //     .yoyo(true);
-      //
-      //   this.game.add.tween(item)
-      //     .to({alpha: 0}, 1000, 'Linear', true, 0, false);
-      //
-      //   setTimeout(() => {
-      //     item.destroy();
-      //   }, 1000);
-      // } else {
-      //   this.snakes.add(item);
-      //
-      //   if (first) {
-      //     first = false;
-      //     this.addPlayerName(player.name, body_part.center_point.x, body_part.center_point.y);
-      //   }
-      // }
+        let destroyCallback = destroy.bind(this, item);
+
+        setTimeout(destroyCallback, 1000);
+      } else {
+        this.snakes.add(item);
+
+        if (first) {
+          first = false;
+          this.addPlayerName(player.name, body_part.center_point.x, body_part.center_point.y);
+        }
+      }
     }
   }
 
   drawFood(food) {
-    const item = this.game.add.graphics(this.game.world.centerX, this.game.world.centerY);
-
-    item.lineStyle(4, 0x37b714, 1);
-
-    item.drawCircle(
-      food.circle.center_point.x,
-      food.circle.center_point.y,
-      food.circle.radius
+    const item = this.game.add.sprite(
+      this.game.world.centerX + food.circle.center_point.x,
+      this.game.world.centerY + food.circle.center_point.y,
+      'fruits',
+      food.type
     );
+
+    item.scale.x = food.circle.radius / item.width;
+    item.scale.y = food.circle.radius / item.height;
 
     this.foods.add(item);
   }

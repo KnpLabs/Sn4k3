@@ -38,6 +38,7 @@ class Serializer
             $data[] = [
                 'circle' => static::serializeCircle($food->circle),
                 'value' => $food->value,
+                'type' => $food->type,
             ];
         }
 
