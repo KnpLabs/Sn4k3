@@ -61,3 +61,23 @@ Here are some benchmarks about this:
 | ------------------ | ------ | --------- | ------ |
 | Total calculations | 200000 | 70000     | 20     |
 | Average time       | 1500   | 8300      | 18000  |
+
+## Destroying items
+
+A "destroy" workflow has been implemented to avoid memory leaks because of referenced objects.
+
+The "first" thing that can be destroyed is a `Player` object, once the snake dies.
+
+If a player looses, there are recursive calls to every `DestroyableInterface` object that could be one of the 
+ properties of the so-called destroyable object.
+
+In the case of the `Player` object, this is how objects are deleted:
+
+1. Call `Player->destroy()`
+2. Will destroy the `Snake`
+3. Will destroy the `Snake::$bodyParts` which is a `CirclesList` instance
+4. Will destroy every circle which are `Circle` instances
+5. Will destroy the `Circle::$centerPoint` property
+ 
+Everything is `unset()` and manually set to `null` so we make sure memory is completely fred of any possible object
+ reference that would introduce memory leaks.
