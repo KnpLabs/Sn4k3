@@ -100,6 +100,8 @@ class SnakeArea {
       this.bg.tilePosition.x = headX * -1;
       this.bg.tilePosition.y = headY * -1;
     }
+
+    this.drawPlayersTable();
   }
 
   drawSnake(player) {
@@ -173,8 +175,25 @@ class SnakeArea {
       food.type
     );
 
-    item.scale.x = food.circle.radius / item.width;
-    item.scale.y = food.circle.radius / item.height;
+    item.anchor.set(0.5, 0.5);
+
+    item.scale.x = food.circle.radius / 60;
+    item.scale.y = food.circle.radius / 60;
+
+    // const circle = this.game.add.graphics(
+    //   this.game.world.centerX,
+    //   this.game.world.centerY
+    // );
+    //
+    // circle.lineStyle(4, 0x37b714, 1);
+    //
+    // this.foods.add(circle);
+    //
+    // circle.drawCircle(
+    //   food.circle.center.x,
+    //   food.circle.center.y,
+    //   food.circle.radius
+    // );
 
     this.foods.add(item);
   }
@@ -194,6 +213,49 @@ class SnakeArea {
 
     this.snakes.add(text);
     this.snakes.bringToTop(text);
+  }
+
+  drawPlayersTable() {
+    this.table && this.table.destroy();
+    this.table = this.game.add.group();
+
+    var players = this.worldData.players;
+
+    console.log(players);
+    if (players.length === 0) {
+      return;
+    }
+
+    players.sort((a, b) => {
+      return a.score > b.score;
+    });
+
+    var data = '';
+    const style = { font: '12px Arial', fill: PLAYER_NAME_COLOR, align: 'center' };
+
+    for (const player of players) {
+      data += player.name + ' - ' + player.score + "\r\n";
+    }
+
+    const text = this.game.add.text(
+      this.game.camera.x + this.game.camera.width - 160,
+      this.game.camera.y + 30,
+      data,
+      style
+    );
+
+    let container = this.game.add.graphics(
+      this.game.camera.position.x + this.game.camera.width,
+      this.game.camera.position.y
+    );
+
+    container.lineStyle(2, 0xffd900, 1);
+    container.beginFill(0xffd900, 0.5);
+    container.drawRoundedRect(-170, 20, 150, (players.length * 24) + 20);
+    container.endFill();
+
+    this.table.add(container);
+    this.table.add(text);
   }
 }
 
