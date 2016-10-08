@@ -7,9 +7,10 @@ function makeWorldDataFromNetworkData(lightNetworkData) {
         const newPlayer = {
             name: playerData.n,
             color: playerData.c,
+            score: playerData.sc,
             snake: {
                 direction: playerData.s.d,
-                headAngle: playerData.s.h,
+                headAngle: playerData.s.a,
                 length: playerData.s.l,
                 destroyed: playerData.s.dd,
             },
@@ -28,9 +29,10 @@ function makeWorldDataFromNetworkData(lightNetworkData) {
         worldData.map.foods.push({
             circle: getCircleFromLightNetworkData(foodData[0]),
             value: foodData[1],
+            type: foodData[2]
         })
     }
-debugger
+
     return worldData;
 }
 

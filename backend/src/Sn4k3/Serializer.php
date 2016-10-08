@@ -50,6 +50,7 @@ class Serializer
                 'n' => $player->name,
                 'c' => $player->color,
                 's' => self::serializeSnake($player->snake),
+                'sc' => $player->score
             ];
         }, array_values($players));
     }

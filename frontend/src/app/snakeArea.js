@@ -75,6 +75,9 @@ class SnakeArea {
     this.foods && this.foods.destroy();
     this.foods = this.game.add.group();
 
+    this.heads && this.heads.destroy();
+    this.heads = this.game.add.group();
+
     for (const player of this.worldData.players) {
       this.drawSnake(player);
     }
@@ -102,21 +105,22 @@ class SnakeArea {
   drawSnake(player) {
     let first = true;
     let item;
+    let items = [];
 
-    for (const body_part of player.snake.body_parts) {
+    for (const bodyPart of player.snake.bodyParts) {
       if (first) {
         item = this.game.add.sprite(
-          this.game.world.centerX + body_part.center.x,
-          this.game.world.centerY + body_part.center.y,
+          this.game.world.centerX + bodyPart.center.x,
+          this.game.world.centerY + bodyPart.center.y,
           'snek',
           player.color
         );
 
-        item.angle = 270 - player.snake.head_angle;
+        item.angle = 270 - player.snake.headAngle;
       } else {
         item = this.game.add.sprite(
-          this.game.world.centerX + body_part.center.x,
-          this.game.world.centerY + body_part.center.y,
+          this.game.world.centerX + bodyPart.center.x,
+          this.game.world.centerY + bodyPart.center.y,
           'body',
           player.color
         );
@@ -128,12 +132,19 @@ class SnakeArea {
        this.destroySnake(item);
       } else {
         this.snakes.add(item);
+        items.push(item);
 
         if (first) {
           first = false;
-          this.addPlayerName(player.name, body_part.center.x, body_part.center.y);
+          this.addPlayerName(player.name, player.score, bodyPart.center.x, bodyPart.center.y);
+          this.heads.add(item);
+          this.heads.bringToTop(item);
         }
       }
+    }
+
+    for (item of items.reverse()) {
+      this.snakes.bringToTop(item);
     }
   }
 
@@ -165,16 +176,16 @@ class SnakeArea {
     item.scale.x = food.circle.radius / item.width;
     item.scale.y = food.circle.radius / item.height;
 
-    this.foods.add(foodGraphics);
+    this.foods.add(item);
   }
 
-  addPlayerName(name, x, y) {
+  addPlayerName(name, score, x, y) {
     const style = { font: '12px Arial', fill: PLAYER_NAME_COLOR, align: 'center' };
 
     const text = this.game.add.text(
         0,
         0,
-        name,
+        name + ' - ' + score,
         style
     );
 
@@ -182,6 +193,7 @@ class SnakeArea {
     text.y = this.game.world.centerY + y - 25;
 
     this.snakes.add(text);
+    this.snakes.bringToTop(text);
   }
 }
 
