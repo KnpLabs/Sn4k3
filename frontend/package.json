@@ -4,8 +4,8 @@
   "description": "Snake fights fuck yeah",
   "main": "app.js",
   "scripts": {
-    "build": "NODE_PATH=frontend/src:frontend/node_modules browserify src/app/app.js -o public/bundle.js",
-    "watch": "NODE_PATH=frontend/src:frontend/node_modules watchify src/app/app.js -o public/bundle.js -v"
+    "build": "NODE_PATH=frontend/src:frontend/node_modules ./node_modules/.bin/browserify src/app/app.js -o public/bundle.js",
+    "watch": "NODE_PATH=frontend/src:frontend/node_modules ./node_modules/.bin/watchify src/app/app.js -o public/bundle.js -v"
   },
   "author": "Sn4k3 Team",
   "license": "ISC",
