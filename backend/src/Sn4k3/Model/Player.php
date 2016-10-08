@@ -2,11 +2,12 @@
 
 namespace Sn4k3\Model;
 
-use Sn4k3\Behaviour\Destroyable;
+use Sn4k3\Behaviour\DestroyableInterface;
+use Sn4k3\Behaviour\DestroyableTrait;
 
-class Player
+class Player implements DestroyableInterface
 {
-    use Destroyable;
+    use DestroyableTrait;
 
     const DIRECTION_LEFT = 'left';
     const DIRECTION_RIGHT = 'right';
@@ -99,5 +100,15 @@ class Player
         if ($this->canChangeDirection($direction)) {
             $this->snake->direction = $direction;
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getVarsToDestroy(): array
+    {
+        return [
+            $this->snake,
+        ];
     }
 }

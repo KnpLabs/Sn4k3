@@ -2,15 +2,16 @@
 
 namespace Sn4k3\Model;
 
-use Sn4k3\Behaviour\Destroyable;
+use Sn4k3\Behaviour\DestroyableInterface;
+use Sn4k3\Behaviour\DestroyableTrait;
 use Sn4k3\Collision\AbstractCollisonable;
 use Sn4k3\Collision\CollisionableInterface;
 use Sn4k3\Geometry\Circle;
 use Sn4k3\Geometry\CircleList;
 
-class Food extends AbstractCollisonable
+class Food extends AbstractCollisonable implements DestroyableInterface
 {
-    use Destroyable;
+    use DestroyableTrait;
 
     const DEFAULT_VALUE = 5;
 

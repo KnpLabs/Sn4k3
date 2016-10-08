@@ -14,6 +14,15 @@ class CircleList extends AbstractCollisonable implements \ArrayAccess, \Countabl
      */
     private $circles = [];
 
+    public function clear()
+    {
+        foreach ($this->circles as $k => $circle) {
+            $circle->centerPoint = null;
+            unset($this->circles[$k]);
+            $circle = null;
+        }
+    }
+
     /**
      * @param Circle[] $circles
      */

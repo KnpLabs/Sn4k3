@@ -80,9 +80,6 @@ class Game
 
         // Execute $this->tick() on every tick interval
         $this->loop->addPeriodicTimer($this->tickInterval / 1000, [$this, 'tick']);
-        $this->loop->addPeriodicTimer(0.2, function() {
-            var_dump(memory_get_usage());
-        });
         $this->isRunning = true;
     }
 
@@ -147,9 +144,11 @@ class Game
                     'Player %s has lost!',
                     $player->name
                 );
-                $snakeIndex = array_search($player->snake, $this->map->snakes, true);
-                unset($this->players[$k], $this->map->snakes[$snakeIndex]);
+
+                // Make sure player is correctly destroyed, to free memory.
                 $player->destroy();
+                $player = null;
+                unset($this->players[$k]);
             }
         }
 

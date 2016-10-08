@@ -2,6 +2,8 @@
 
 namespace Sn4k3\Model;
 
+use Sn4k3\Behaviour\DestroyableInterface;
+use Sn4k3\Behaviour\DestroyableTrait;
 use Sn4k3\Collision\AbstractCollisonable;
 use Sn4k3\Collision\CollisionableInterface;
 use Sn4k3\Geometry\Circle;
@@ -9,8 +11,10 @@ use Sn4k3\Geometry\CircleList;
 use Sn4k3\Geometry\Point;
 use Sn4k3\Math\CollisionsManager;
 
-class Snake extends AbstractCollisonable
+class Snake extends AbstractCollisonable implements DestroyableInterface
 {
+    use DestroyableTrait;
+
     const DEFAULT_HEAD_ANGLE = 0; // In degrees.
     const DEFAULT_HEAD_ANGLE_TICK = 10; // In degrees.
     const DEFAULT_SPEED = 10; // In pixels.
@@ -285,5 +289,29 @@ class Snake extends AbstractCollisonable
 
             $this->player->score = 0;
         }
+    }
+
+    public function destroy()
+    {
+        $snakeIndex = array_search($this, $this->player->map->snakes, true);
+        unset($this->player->map->snakes[$snakeIndex]);
+
+        foreach ($this->getVarsToDestroy() as $p => $v) {
+            if (is_object($v) && $v instanceof self) {
+                $v->destroy();
+            }
+            $this->$p = null;
+            $v = null;
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getVarsToDestroy(): array
+    {
+        return [
+            $this->bodyParts,
+        ];
     }
 }
