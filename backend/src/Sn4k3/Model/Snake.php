@@ -2,12 +2,14 @@
 
 namespace Sn4k3\Model;
 
+use Sn4k3\Collision\AbstractCollisonable;
+use Sn4k3\Collision\CollisionableInterface;
 use Sn4k3\Geometry\Circle;
 use Sn4k3\Geometry\CircleList;
 use Sn4k3\Geometry\Point;
 use Sn4k3\Math\CollisionsManager;
 
-class Snake implements CollisionableInterface
+class Snake extends AbstractCollisonable
 {
     const DEFAULT_HEAD_ANGLE = 0; // In degrees.
     const DEFAULT_HEAD_ANGLE_TICK = 10; // In degrees.
@@ -107,7 +109,6 @@ class Snake implements CollisionableInterface
 
     public function getTail(): Circle
     {
-
         return $this->bodyParts->last();
     }
 
@@ -270,5 +271,15 @@ class Snake implements CollisionableInterface
         }
 
         return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function collide(CollisionableInterface $target)
+    {
+        if ($target instanceof Snake) {
+            $this->player->score = 0;
+        }
     }
 }
