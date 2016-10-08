@@ -10,6 +10,8 @@ const PLAYER_NAME_COLOR = '#FFFF00';//this is a text color: must be a hex string
 const HEAD_COLOR = 0xFF0000;
 const BODY_COLOR = 0xFFFFFF;
 
+const simpleWorldFixture = require('./fixtures/simple-world');
+
 class SnakeArea {
 
   constructor(nodeId) {
@@ -37,6 +39,8 @@ class SnakeArea {
   preload() {
     this.game.stage.backgroundColor = '#000';
     this.game.load.image('bg', 'frontend/public/assets/bg.jpg');
+    this.game.load.spritesheet('snek', 'frontend/public/assets/snakeswag.png', 32, 32, 21, 2);
+    this.game.load.spritesheet('body', 'frontend/public/assets/body.png', 18, 14, 4);
   }
 
   render() {
@@ -67,6 +71,8 @@ class SnakeArea {
   }
 
   update() {
+    //this.worldData = simpleWorldFixture;
+
     this.snakes && this.snakes.destroy();
     this.snakes = this.game.add.group();
 
@@ -99,9 +105,34 @@ class SnakeArea {
 
   drawSnake(player) {
     let first = true;
+    let item;
 
     for (const body_part of player.snake.body_parts) {
-      const item = this.game.add.graphics(this.game.world.centerX, this.game.world.centerY);
+      if (first) {
+        item = this.game.add.sprite(
+          this.game.world.centerX + body_part.center_point.x,
+          this.game.world.centerY + body_part.center_point.y,
+          'snek',
+          0
+        );
+
+        item.anchor.set(0.5, 0.5);
+
+        first = false;
+      } else {
+        item = this.game.add.sprite(
+          this.game.world.centerX + body_part.center_point.x,
+          this.game.world.centerY + body_part.center_point.y,
+          'body',
+          0
+        );
+
+        item.anchor.set(0.5, 0.5);
+      }
+
+
+
+      item = this.game.add.graphics(this.game.world.centerX, this.game.world.centerY);
       const bodyPartColor = first ? HEAD_COLOR : player.color || BODY_COLOR ;
 
       item.lineStyle(4, 0x000000, 1);
@@ -117,26 +148,26 @@ class SnakeArea {
         body_part.center_point.y,
         body_part.radius
       );
-
-      if (player.snake.destroyed) {
-        this.game.add.tween(item.scale)
-          .to( {x: 1.2, y: 1.2}, 1000, Phaser.Easing.Back.InOut, true, 0, false)
-          .yoyo(true);
-
-        this.game.add.tween(item)
-          .to({alpha: 0}, 1000, 'Linear', true, 0, false);
-
-        setTimeout(() => {
-          item.destroy();
-        }, 1000);
-      } else {
-        this.snakes.add(item);
-
-        if (first) {
-          first = false;
-          this.addPlayerName(player.name, body_part.center_point.x, body_part.center_point.y);
-        }
-      }
+      //
+      // if (player.snake.destroyed) {
+      //   this.game.add.tween(item.scale)
+      //     .to( {x: 1.2, y: 1.2}, 1000, Phaser.Easing.Back.InOut, true, 0, false)
+      //     .yoyo(true);
+      //
+      //   this.game.add.tween(item)
+      //     .to({alpha: 0}, 1000, 'Linear', true, 0, false);
+      //
+      //   setTimeout(() => {
+      //     item.destroy();
+      //   }, 1000);
+      // } else {
+      //   this.snakes.add(item);
+      //
+      //   if (first) {
+      //     first = false;
+      //     this.addPlayerName(player.name, body_part.center_point.x, body_part.center_point.y);
+      //   }
+      // }
     }
   }
 

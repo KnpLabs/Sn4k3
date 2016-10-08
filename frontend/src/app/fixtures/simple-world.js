@@ -32,5 +32,8 @@ module.exports = {
             },
             score: 100
         }
-    ]
+    ],
+    map: {
+        foods: []
+    }
 };
