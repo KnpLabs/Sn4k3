@@ -214,7 +214,7 @@ class Snake extends AbstractCollisonable
     {
         foreach ($this->map->foods as $k => $food) {
             if (CollisionsManager::testCollisionablesCollision($this, $food)) {
-                $food->onPick($this);
+                $food->collide($this);
 
                 return true;
             }
