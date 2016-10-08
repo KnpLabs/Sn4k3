@@ -80,6 +80,9 @@ class Game
 
         // Execute $this->tick() on every tick interval
         $this->loop->addPeriodicTimer($this->tickInterval / 1000, [$this, 'tick']);
+        $this->loop->addPeriodicTimer(0.2, function() {
+            var_dump(memory_get_usage());
+        });
         $this->isRunning = true;
     }
 
@@ -96,7 +99,6 @@ class Game
         }
 
         // Create food elements in the field
-        $this->foodTicks--;
         if ($this->foodTicks <= 0 && count($this->players)) {
             /** @var Player $randomPlayer */
             $randomPlayer = $this->players[array_rand($this->players)];
@@ -123,6 +125,8 @@ class Game
             $this->map->foods[] = $food;
 
             $this->foodTicks = self::DEFAULT_FOOD_APPEARANCE_TICK;
+        } else {
+            $this->foodTicks--;
         }
 
         foreach ($this->map->foods as $food) {

@@ -90,10 +90,8 @@ class Application
     private function broadcastTick()
     {
         $this->game->on(Game::EVENT_TICK, function () {
-            $this->webSocket->promiseSession()->then(function (ClientSession $session) {
-                $data = Serializer::serializeGame($this->game);
-                $session->publish(self::EVENT_OUTGOING_TICK, null, $data);
-            });
+            $data = Serializer::serializeGame($this->game);
+            $this->webSocket->getSession()->publish(self::EVENT_OUTGOING_TICK, null, $data);
         });
     }
 }
