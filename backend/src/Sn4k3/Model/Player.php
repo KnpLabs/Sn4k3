@@ -10,13 +10,10 @@ class Player
     const DEFAULT_TICK_INTERVAL = 10;
 
     const AVAILABLE_COLORS = [
-       0xFF0000,//red
-       0xFFFF00,//yellow
-       0xFFFFFF,//white
-       0x00FFFF,//cyan
-       0x0000FF,//blue
-       0x00FF00,//green
-       0xFF00FF,//pink
+        0,
+        1,
+        2,
+        3
     ];
 
     /**

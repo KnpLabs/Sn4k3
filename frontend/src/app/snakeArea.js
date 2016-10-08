@@ -8,8 +8,6 @@ const CrossbarConnection = require('./crossbarConnection');
 const networkDataTranslator = require('./network-data-translator');
 
 const PLAYER_NAME_COLOR = '#FFFF00';//this is a text color: must be a hex string
-const HEAD_COLOR = 0xFF0000;
-const BODY_COLOR = 0xFFFFFF;
 
 class SnakeArea {
 
@@ -38,6 +36,9 @@ class SnakeArea {
   preload() {
     this.game.stage.backgroundColor = '#000';
     this.game.load.image('bg', 'frontend/public/assets/bg.jpg');
+    this.game.load.spritesheet('snek', 'frontend/public/assets/snakeswag.png', 32, 32, 21, 2);
+    this.game.load.spritesheet('body', 'frontend/public/assets/body.png', 18, 14, 4);
+    this.game.load.spritesheet('fruits', 'frontend/public/assets/fruits.png', 60, 60, 12);
   }
 
   render() {
@@ -100,29 +101,33 @@ class SnakeArea {
 
   drawSnake(player) {
     let first = true;
+    let item;
 
-    const bodyPartGraphics = this.game.add.graphics(this.game.world.centerX, this.game.world.centerY);
-    for (const body_part of player.snake.bodyParts) {
-      const bodyPartColor = first ? HEAD_COLOR : player.color || BODY_COLOR ;
+    for (const body_part of player.snake.body_parts) {
+      if (first) {
+        item = this.game.add.sprite(
+          this.game.world.centerX + body_part.center.x,
+          this.game.world.centerY + body_part.center.y,
+          'snek',
+          player.color
+        );
 
-      bodyPartGraphics.lineStyle(4, 0x000000, 1);
-      bodyPartGraphics.drawCircle(
-        body_part.center.x,
-        body_part.center.y,
-        body_part.radius
-      );
+        item.angle = 270 - player.snake.head_angle;
+      } else {
+        item = this.game.add.sprite(
+          this.game.world.centerX + body_part.center.x,
+          this.game.world.centerY + body_part.center.y,
+          'body',
+          player.color
+        );
+      }
 
-      bodyPartGraphics.lineStyle(2, bodyPartColor, 1);
-      bodyPartGraphics.drawCircle(
-        body_part.center.x,
-        body_part.center.y,
-        body_part.radius
-      );
+      item.anchor.set(0.5, 0.5);
 
       if (player.snake.destroyed) {
-       this.destroySnake(bodyPartGraphics);
+       this.destroySnake(item);
       } else {
-        this.snakes.add(bodyPartGraphics);
+        this.snakes.add(item);
 
         if (first) {
           first = false;
@@ -134,25 +139,31 @@ class SnakeArea {
 
   destroySnake(snakeGraphics) {
     this.game.add.tween(snakeGraphics.scale)
-        .to( {x: 1.2, y: 1.2}, 1000, Phaser.Easing.Back.InOut, true, 0, false)
-        .yoyo(true);
+      .to( {x: 1.2, y: 1.2}, 1000, Phaser.Easing.Back.InOut, true, 0, false)
+      .yoyo(true);
 
     this.game.add.tween(snakeGraphics)
-        .to({alpha: 0}, 1000, 'Linear', true, 0, false);
+      .to({alpha: 0}, 1000, 'Linear', true, 0, false);
 
-    setTimeout(snakeGraphics.destroy.bind(snakeGraphics), 1000);
+    let destroy = (item) => {
+      item.destroy();
+    };
+
+    let destroyCallback = destroy.bind(this, snakeGraphics);
+
+    setTimeout(destroyCallback, 1000);
   }
 
   drawFood(food) {
-    const foodGraphics = this.game.add.graphics(this.game.world.centerX, this.game.world.centerY);
-
-    foodGraphics.lineStyle(4, 0x37b714, 1);
-
-    foodGraphics.drawCircle(
-      food.circle.center.x,
-      food.circle.center.y,
-      food.circle.radius
+    const item = this.game.add.sprite(
+      this.game.world.centerX + food.circle.center.x,
+      this.game.world.centerY + food.circle.center.y,
+      'fruits',
+      food.type
     );
+
+    item.scale.x = food.circle.radius / item.width;
+    item.scale.y = food.circle.radius / item.height;
 
     this.foods.add(foodGraphics);
   }

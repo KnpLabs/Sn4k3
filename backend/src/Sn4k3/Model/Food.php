@@ -24,10 +24,16 @@ class Food implements PickableInterface
      */
     public $lifetime;
 
+    /**
+     * @var int
+     */
+    public $type;
+
     public function __construct(Circle $circle, int $value = self::DEFAULT_VALUE)
     {
         $this->circle = $circle;
         $this->value = $value;
+        $this->type = random_int(0, 11);
     }
 
     /**

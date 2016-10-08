@@ -33,6 +33,7 @@ class Serializer
             return [
                 static::serializeCircle($food->circle),
                 $food->value,
+                $food->type,
             ];
         }, $foods);
     }
