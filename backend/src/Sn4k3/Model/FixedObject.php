@@ -2,10 +2,11 @@
 
 namespace Sn4k3\Model;
 
+use Sn4k3\Collision\AbstractCollisonable;
 use Sn4k3\Geometry\Circle;
 use Sn4k3\Geometry\CircleList;
 
-class FixedObject implements CollisionableInterface
+class FixedObject extends AbstractCollisonable
 {
     /**
      * @var CircleList
