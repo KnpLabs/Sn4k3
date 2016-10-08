@@ -3,6 +3,7 @@
 namespace Sn4k3\Tests\Model;
 
 use PHPUnit\Framework\TestCase;
+use Sn4k3\Model\Player;
 use Sn4k3\Geometry\Circle;
 use Sn4k3\Geometry\Point;
 use Sn4k3\Model\Food;
@@ -18,7 +19,7 @@ class FoodTest extends TestCase
         $food = new Food(new Circle(new Point(0, 0)));
         $map->foods[] = $food;
 
-        $snake = new Snake($map);
+        $snake = new Snake($map, new Player($map));
         $snake->length = 1;
 
         $food->onPick($snake);
