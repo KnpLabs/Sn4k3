@@ -91,7 +91,9 @@ class Application
     {
         $this->game->on(Game::EVENT_TICK, function () {
             $data = Serializer::serializeGame($this->game);
-            $this->webSocket->getSession()->publish(self::EVENT_OUTGOING_TICK, null, $data);
+            if ($session = $this->webSocket->getSession()) {
+                $session->publish(self::EVENT_OUTGOING_TICK, null, $data);
+            }
         });
     }
 }
