@@ -44,7 +44,7 @@ class Food implements PickableInterface
     public function onPick(Snake $snake)
     {
         // Increase snake's length.
-        $snake->length += $this->value;
+        $snake->grow($this->value);
 
         // Search food object in map.
         $foodIndex = array_search($this, $snake->map->foods, true);

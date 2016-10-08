@@ -13,6 +13,7 @@ class Snake implements CollisionableInterface
     const DEFAULT_HEAD_ANGLE_TICK = 10; // In degrees.
     const DEFAULT_SPEED = 10; // In pixels.
     const DEFAULT_LENGTH = 35; // In terms of "body parts"
+    const MAX_SNAKE_SIZE = 100;
 
     /**
      * @var Player
@@ -108,6 +109,19 @@ class Snake implements CollisionableInterface
     {
 
         return $this->bodyParts->last();
+    }
+
+    /**
+     * @param int $value
+     */
+    public function grow(int $value = 1)
+    {
+        $this->length += $value;
+
+        // Limit the maximum size of a snake.
+        if ($this->length > self::MAX_SNAKE_SIZE) {
+            $this->length = self::MAX_SNAKE_SIZE;
+        }
     }
 
     /**
