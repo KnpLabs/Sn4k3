@@ -134,8 +134,11 @@ class Game
 
             if ($food->lifetime === 0) {
                 unset($this->map->foods[array_search($food, $this->map->foods)]);
+                $food->destroy();
+                $food = null;
             }
         }
+
 
         // Remove all players that have lost their snake.
         foreach ($this->players as $k => $player) {
@@ -146,6 +149,7 @@ class Game
                 );
                 $snakeIndex = array_search($player->snake, $this->map->snakes, true);
                 unset($this->players[$k], $this->map->snakes[$snakeIndex]);
+                $player->destroy();
             }
         }
 

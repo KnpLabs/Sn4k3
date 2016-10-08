@@ -2,8 +2,12 @@
 
 namespace Sn4k3\Model;
 
+use Sn4k3\Behaviour\Destroyable;
+
 class Player
 {
+    use Destroyable;
+
     const DIRECTION_LEFT = 'left';
     const DIRECTION_RIGHT = 'right';
 

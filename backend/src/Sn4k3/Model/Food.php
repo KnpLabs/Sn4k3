@@ -2,6 +2,7 @@
 
 namespace Sn4k3\Model;
 
+use Sn4k3\Behaviour\Destroyable;
 use Sn4k3\Collision\AbstractCollisonable;
 use Sn4k3\Collision\CollisionableInterface;
 use Sn4k3\Geometry\Circle;
@@ -9,6 +10,8 @@ use Sn4k3\Geometry\CircleList;
 
 class Food extends AbstractCollisonable
 {
+    use Destroyable;
+
     const DEFAULT_VALUE = 5;
 
     /**
