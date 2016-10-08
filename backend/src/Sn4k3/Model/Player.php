@@ -2,13 +2,8 @@
 
 namespace Sn4k3\Model;
 
-use Sn4k3\Behaviour\DestroyableInterface;
-use Sn4k3\Behaviour\DestroyableTrait;
-
-class Player implements DestroyableInterface
+class Player
 {
-    use DestroyableTrait;
-
     const DIRECTION_LEFT = 'left';
     const DIRECTION_RIGHT = 'right';
 
@@ -102,13 +97,12 @@ class Player implements DestroyableInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getVarsToDestroy(): array
+    public function destroy()
     {
-        return [
-            $this->snake,
-        ];
+        foreach (get_object_vars($this) as $p => $v) {
+            $this->$p = null;
+            $v = null;
+        }
+        gc_collect_cycles();
     }
 }

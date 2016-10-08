@@ -78,8 +78,44 @@ class Game
             throw new \LogicException('Game is already running');
         }
 
+        $m = memory_get_usage();
+
+        $parseMem = function ($val) {
+            $val = trim($val);
+            $last = strtolower($val[strlen($val)-1]);
+            switch($last) {
+                // The 'G' modifier is available since PHP 5.1.0
+                case 'g':
+                    $val *= 1024;
+                case 'm':
+                    $val *= 1024;
+                case 'k':
+                    $val *= 1024;
+            }
+
+            return $val;
+        };
+
         // Execute $this->tick() on every tick interval
         $this->loop->addPeriodicTimer($this->tickInterval / 1000, [$this, 'tick']);
+        $this->loop->addPeriodicTimer(0.2, function() use ($m, $parseMem) {
+            $memoryUsage = memory_get_usage();
+
+            $ini = ini_get('memory_limit');
+            if ('-1' === $ini) {
+                $ini = '4M';
+            }
+
+            $d = 60000;
+            $max = $parseMem($ini) / $d;
+
+            echo $memoryUsage.' [';
+            for ($i = 0; $i < $max; $i++) {
+                echo $i < ($memoryUsage / $d) ? '|' : ' ';
+            }
+            echo "]\n";
+
+        });
         $this->isRunning = true;
     }
 
@@ -131,11 +167,9 @@ class Game
 
             if ($food->lifetime === 0) {
                 unset($this->map->foods[array_search($food, $this->map->foods)]);
-                $food->destroy();
                 $food = null;
             }
         }
-
 
         // Remove all players that have lost their snake.
         foreach ($this->players as $k => $player) {

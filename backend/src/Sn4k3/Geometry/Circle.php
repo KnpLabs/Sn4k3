@@ -2,13 +2,8 @@
 
 namespace Sn4k3\Geometry;
 
-use Sn4k3\Behaviour\DestroyableInterface;
-use Sn4k3\Behaviour\DestroyableTrait;
-
-class Circle implements DestroyableInterface
+class Circle
 {
-    use DestroyableTrait;
-
     const DEFAULT_RADIUS = 10;
 
     /**
