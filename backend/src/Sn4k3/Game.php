@@ -93,19 +93,6 @@ class Game
             // Change the keyPress status on each event.
             $event->getPlayer()->keyPressed = $event->isKeyPressed();
             $event->getPlayer()->snake->direction = $event->getDirection();
-
-            // Just show a message in logs.
-            if ($event->isKeyPressed()) {
-//                echo sprintf(
-//                    'Player %s changed direction to %s.',
-//                    $event->getPlayer()->name, $event->getDirection()
-//                ), PHP_EOL;
-            } else {
-//                echo sprintf(
-//                    'Player %s is still moving forward.',
-//                    $event->getPlayer()->name
-//                ), PHP_EOL;
-            }
         }
 
         // Create food elements in the field
@@ -117,7 +104,7 @@ class Game
             $snakeHead = $randomPlayer->snake->getHead();
 
             $randomRange = function($start, $end, $min, $max) {
-                while ($random = random_int($start, $end)) {
+                while ($random = rand($start, $end)) {
                     if ($random < $min || $random > $max) {
                         return $random;
                     }
@@ -129,9 +116,9 @@ class Game
                 $snakeHead->centerPoint->y + ($y = $randomRange(-500, 500, -100, 100))
             );
 
-            $foodValueAndRadius = random_int(15, 100);
+            $foodValueAndRadius = rand(15, 100);
             $food = new Food(new Circle($newPoint, $foodValueAndRadius), ceil($foodValueAndRadius / 5));
-            $food->lifetime = random_int(100, 500);
+            $food->lifetime = rand(100, 500);
 
             $this->map->foods[] = $food;
 

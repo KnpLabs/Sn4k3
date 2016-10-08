@@ -12,7 +12,7 @@ class Snake implements CollisionableInterface
     const DEFAULT_HEAD_ANGLE = 0; // In degrees.
     const DEFAULT_HEAD_ANGLE_TICK = 10; // In degrees.
     const DEFAULT_SPEED = 10; // In pixels.
-    const DEFAULT_LENGTH = 35; // In terms of "body parts"
+    const DEFAULT_LENGTH = 10; // In terms of "body parts"
     const MAX_SNAKE_SIZE = 100;
 
     /**
@@ -70,11 +70,11 @@ class Snake implements CollisionableInterface
     public function __construct(Map $map, Player $player, int $speed = self::DEFAULT_SPEED, int $headAngle = self::DEFAULT_HEAD_ANGLE)
     {
         $randomPosition = new Circle(new Point(
-            random_int(-300, 300),
-            random_int(-300, 300)
+            rand(-1000, 1000),
+            rand(-1000, 1000)
         ));
 
-        $randomAngle = random_int(0, 360);
+        $randomAngle = rand(0, 360);
 
         $this->bodyParts = new CircleList();
         $this->player = $player;
