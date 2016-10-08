@@ -137,10 +137,18 @@ class CircleList implements CollisionableInterface, \ArrayAccess, \Countable, \I
     }
 
     /**
+     * @return array
+     */
+    public function getCirclesArray(): array
+    {
+        return $this->circles;
+    }
+
+    /**
      * @return CircleList
      */
     public function getCircleList(): CircleList
     {
-        return $this;
+        return $this;//because... Interface.
     }
 }
