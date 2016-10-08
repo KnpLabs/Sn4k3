@@ -15,91 +15,75 @@ class Serializer
     public static function serializeGame(Game $game) : array
     {
         return [
-            'players' => self::serializePlayers($game->getPlayers()),
-            'map' => static::serializeMap($game->getMap()),
+            'p' => self::serializePlayers($game->getPlayers()),
+            'm' => static::serializeMap($game->getMap()),
         ];
     }
 
     public static function serializeMap(Map $map): array
     {
         return [
-            'foods' => static::serializeFoods($map->foods),
+            'f' => static::serializeFoods(array_values($map->foods)),
         ];
     }
 
     public static function serializeFoods(array $foods)
     {
-        $data = [];
-
-        foreach ($foods as $food) {
-            if (!$food instanceof Food) {
-                throw new \InvalidArgumentException('Foods array should be populated with Food objects.');
-            }
-            $data[] = [
-                'circle' => static::serializeCircle($food->circle),
-                'value' => $food->value,
+        return array_map(function(Food $food) {
+            return [
+                static::serializeCircle($food->circle),
+                $food->value,
             ];
-        }
-
-        return $data;
+        }, $foods);
     }
 
     /**
-     * @param Player[] $players
+     * @param Player[] $players a "hash => player" hash
      *
      * @return array
      */
     public static function serializePlayers(array $players) : array
     {
-        $data = [];
-
-        foreach ($players as $player) {
-            $data[] = [
-                'name' => $player->name,
-                'color' => $player->color,
-                'snake' => self::serializeSnake($player->snake),
-                'score' => $player->score,
+        return array_map(function(Player $player) {
+            return [
+                'n' => $player->name,
+                'c' => $player->color,
+                's' => self::serializeSnake($player->snake),
             ];
-        }
-
-        return $data;
+        }, array_values($players));
     }
 
     public static function serializeSnake(Snake $snake) : array
     {
         return [
-            'direction' => $snake->direction,
-            'head_angle' => $snake->headAngle,
-            'length' => $snake->length,
-            'body_parts' => self::serializeCircleList($snake->getCircleList()),
-            'destroyed' => $snake->destroyed,
+            'd' => $snake->direction,
+            'a' => $snake->headAngle,
+            'l' => $snake->length,
+            'b' => self::serializeCircleList($snake->getCircleList()),
+            'dd' => $snake->destroyed,
         ];
     }
 
     public static function serializeCircleList(CircleList $bodyParts) : array
     {
-        $data = [];
-
-        foreach ($bodyParts as $part) {
-            $data[] = static::serializeCircle($part);
-        }
-
-        return $data;
+        return array_map(function(Circle $bodyPart) {
+            return static::serializeCircle($bodyPart);
+        }, $bodyParts->getCirclesArray());
     }
 
     public static function serializeCircle(Circle $circle): array
     {
         return [
-            'center_point' => static::serializePoint($circle->centerPoint),
-            'radius' => $circle->radius,
+            static::serializePoint($circle->centerPoint),
+            $circle->radius,
         ];
     }
 
     public static function serializePoint(Point $point)
     {
         return [
-            'x' => $point->x,
-            'y' => $point->y,
+            $point->x,
+            $point->y,
         ];
     }
 }

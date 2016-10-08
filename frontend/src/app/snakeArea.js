@@ -5,6 +5,7 @@ const Phaser = global.Phaser = require('phaser/build/phaser');
 
 // App modules
 const CrossbarConnection = require('./crossbarConnection');
+const networkDataTranslator = require('./network-data-translator');
 
 const PLAYER_NAME_COLOR = '#FFFF00';//this is a text color: must be a hex string
 const HEAD_COLOR = 0xFF0000;
@@ -29,7 +30,7 @@ class SnakeArea {
       session.publish('join', [], {playerName: window.playerName});
 
       session.subscribe('tick', (_, data) => {
-        this.worldData = data;
+        this.worldData = networkDataTranslator.makeWorldDataFromNetworkData(data);
       })
     };
   }
@@ -84,8 +85,8 @@ class SnakeArea {
     var currentUser = this.getCurrentUser();
 
     if (currentUser) {
-      var headX = this.game.world.centerX + currentUser.snake.body_parts[0].center_point.x;
-      var headY = this.game.world.centerY + currentUser.snake.body_parts[0].center_point.y;
+      var headX = this.game.world.centerX + currentUser.snake.bodyParts[0].center.x;
+      var headY = this.game.world.centerY + currentUser.snake.bodyParts[0].center.y;
 
       this.game.camera.x = headX - (this.game.camera.width / 2);
       this.game.camera.y = headY - (this.game.camera.height / 2);
@@ -100,75 +101,76 @@ class SnakeArea {
   drawSnake(player) {
     let first = true;
 
-    for (const body_part of player.snake.body_parts) {
-      const item = this.game.add.graphics(this.game.world.centerX, this.game.world.centerY);
+    const bodyPartGraphics = this.game.add.graphics(this.game.world.centerX, this.game.world.centerY);
+    for (const body_part of player.snake.bodyParts) {
       const bodyPartColor = first ? HEAD_COLOR : player.color || BODY_COLOR ;
 
-      item.lineStyle(4, 0x000000, 1);
-      item.drawCircle(
-        body_part.center_point.x,
-        body_part.center_point.y,
+      bodyPartGraphics.lineStyle(4, 0x000000, 1);
+      bodyPartGraphics.drawCircle(
+        body_part.center.x,
+        body_part.center.y,
         body_part.radius
       );
 
-      item.lineStyle(2, bodyPartColor, 1);
-      item.drawCircle(
-        body_part.center_point.x,
-        body_part.center_point.y,
+      bodyPartGraphics.lineStyle(2, bodyPartColor, 1);
+      bodyPartGraphics.drawCircle(
+        body_part.center.x,
+        body_part.center.y,
         body_part.radius
       );
 
       if (player.snake.destroyed) {
-        this.game.add.tween(item.scale)
-          .to( {x: 1.2, y: 1.2}, 1000, Phaser.Easing.Back.InOut, true, 0, false)
-          .yoyo(true);
-
-        this.game.add.tween(item)
-          .to({alpha: 0}, 1000, 'Linear', true, 0, false);
-
-        setTimeout(() => {
-          item.destroy();
-        }, 1000);
+       this.destroySnake(bodyPartGraphics);
       } else {
-        this.snakes.add(item);
+        this.snakes.add(bodyPartGraphics);
 
         if (first) {
           first = false;
-          this.addPlayerName(player.name, body_part.center_point.x, body_part.center_point.y);
+          this.addPlayerName(player.name, body_part.center.x, body_part.center.y);
         }
       }
     }
   }
 
+  destroySnake(snakeGraphics) {
+    this.game.add.tween(snakeGraphics.scale)
+        .to( {x: 1.2, y: 1.2}, 1000, Phaser.Easing.Back.InOut, true, 0, false)
+        .yoyo(true);
+
+    this.game.add.tween(snakeGraphics)
+        .to({alpha: 0}, 1000, 'Linear', true, 0, false);
+
+    setTimeout(snakeGraphics.destroy.bind(snakeGraphics), 1000);
+  }
+
   drawFood(food) {
-    const item = this.game.add.graphics(this.game.world.centerX, this.game.world.centerY);
+    const foodGraphics = this.game.add.graphics(this.game.world.centerX, this.game.world.centerY);
 
-    item.lineStyle(4, 0x37b714, 1);
+    foodGraphics.lineStyle(4, 0x37b714, 1);
 
-    item.drawCircle(
-      food.circle.center_point.x,
-      food.circle.center_point.y,
+    foodGraphics.drawCircle(
+      food.circle.center.x,
+      food.circle.center.y,
       food.circle.radius
     );
 
-    this.foods.add(item);
+    this.foods.add(foodGraphics);
   }
 
   addPlayerName(name, x, y) {
-    var text = name;
-    var style = { font: "12px Arial", fill: PLAYER_NAME_COLOR, align: "center" };
+    const style = { font: '12px Arial', fill: PLAYER_NAME_COLOR, align: 'center' };
 
-    var t = this.game.add.text(
+    const text = this.game.add.text(
         0,
         0,
-        text,
+        name,
         style
     );
 
-    t.x = this.game.world.centerX + x - (t.width / 2);
-    t.y = this.game.world.centerY + y - 25;
+    text.x = this.game.world.centerX + x - (text.width / 2);
+    text.y = this.game.world.centerY + y - 25;
 
-    this.snakes.add(t);
+    this.snakes.add(text);
   }
 }
 
