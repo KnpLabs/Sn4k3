@@ -22,7 +22,7 @@ class FoodTest extends TestCase
         $snake = new Snake($map, new Player($map));
         $snake->length = 1;
 
-        $food->onPick($snake);
+        $food->collide($snake);
 
         static::assertEmpty($map->foods);
         static::assertEquals(6, $snake->length);
