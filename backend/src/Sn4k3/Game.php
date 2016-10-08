@@ -13,7 +13,7 @@ use Sn4k3\Model\Player;
 class Game
 {
     const DEFAULT_TICK_INTERVAL = 25;
-    const DEFAULT_FOOD_APPEARANCE_TICK = 25;
+    const DEFAULT_FOOD_APPEARANCE_TICK = 40;
 
     const EVENT_TICK = 'event_tick';
     const EVENT_COLLISION = 'event_collision';
@@ -116,7 +116,7 @@ class Game
                 $snakeHead->centerPoint->y + ($y = $randomRange(-500, 500, -100, 100))
             );
 
-            $foodValueAndRadius = rand(30, 200);
+            $foodValueAndRadius = rand(50, 150);
             $food = new Food(new Circle($newPoint, $foodValueAndRadius), ceil($foodValueAndRadius / 5));
             $food->lifetime = rand(100, 500);
 
