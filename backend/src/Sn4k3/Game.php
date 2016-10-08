@@ -233,7 +233,7 @@ class Game
     }
 
     /**
-     * @return Model\Player[]
+     * @return Player[]
      */
     public function getPlayers()
     {

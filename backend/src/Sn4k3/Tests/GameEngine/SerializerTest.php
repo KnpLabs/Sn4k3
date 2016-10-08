@@ -15,7 +15,10 @@ class SerializerTest extends TestCase
         $game = new Game($loop);
 
         static::assertEquals([
-            'players' => []
+            'p' => [],
+            'm' => [
+                'f' => [],
+            ],
         ], Serializer::serializeGame($game));
     }
 
@@ -27,6 +30,6 @@ class SerializerTest extends TestCase
 
         $serialized = Serializer::serializeGame($game);
 
-        static::assertEquals('Player1', $serialized['players'][0]['name']);
+        static::assertEquals('Player1', $serialized['p'][0]['n']);
     }
 }

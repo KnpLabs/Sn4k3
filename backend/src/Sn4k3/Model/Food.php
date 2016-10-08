@@ -2,10 +2,12 @@
 
 namespace Sn4k3\Model;
 
+use Sn4k3\Collision\AbstractCollisonable;
+use Sn4k3\Collision\CollisionableInterface;
 use Sn4k3\Geometry\Circle;
 use Sn4k3\Geometry\CircleList;
 
-class Food implements PickableInterface
+class Food extends AbstractCollisonable
 {
     const DEFAULT_VALUE = 5;
 
@@ -47,15 +49,21 @@ class Food implements PickableInterface
     /**
      * {@inheritdoc}
      */
-    public function onPick(Snake $snake)
+    public function collide(CollisionableInterface $target)
     {
+        if (!$target instanceof Snake) {
+            return;
+        }
+
         // Increase snake's length.
-        $snake->grow($this->value);
+        $target->grow($this->value);
+
+        $target->player->score += $this->value;
 
         // Search food object in map.
-        $foodIndex = array_search($this, $snake->map->foods, true);
+        $foodIndex = array_search($this, $target->map->foods, true);
 
         // Remove food object from the map.
-        unset($snake->map->foods[$foodIndex]);
+        unset($target->map->foods[$foodIndex]);
     }
 }

@@ -4,7 +4,7 @@ namespace Sn4k3\Math;
 
 use Sn4k3\Geometry\Circle;
 use Sn4k3\Geometry\Rectangle;
-use Sn4k3\Model\CollisionableInterface;
+use Sn4k3\Collision\CollisionableInterface;
 
 final class CollisionsManager
 {
@@ -21,6 +21,8 @@ final class CollisionsManager
         foreach ($objectA->getCircleList() as $currentACircle) {
             foreach ($objectB->getCircleList() as $currentBCircle) {
                 if (self::testCirclesCollision($currentACircle, $currentBCircle)) {
+                    $objectA->collide($objectB);
+
                     return true;
                 }
             }

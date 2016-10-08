@@ -2,12 +2,12 @@
 
 namespace Sn4k3\Geometry;
 
-use Sn4k3\Model\CollisionableInterface;
+use Sn4k3\Collision\AbstractCollisonable;
 
 /**
  * Just an array of Circle objects.
  */
-class CircleList implements CollisionableInterface, \ArrayAccess, \Countable, \IteratorAggregate
+class CircleList extends AbstractCollisonable implements \ArrayAccess, \Countable, \IteratorAggregate
 {
     /**
      * @var Circle[]
