@@ -1,5 +1,5 @@
-Sn4k3
-=====
+Sn4k3 - next generation MMO
+===========================
 
 ![Frendly snek](snake.jpg)
 
