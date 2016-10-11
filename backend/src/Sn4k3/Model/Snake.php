@@ -14,8 +14,8 @@ class Snake extends AbstractCollisonable
     const DEFAULT_HEAD_ANGLE = 0; // In degrees.
     const DEFAULT_HEAD_ANGLE_TICK = 10; // In degrees.
     const DEFAULT_SPEED = 10; // In pixels.
-    const DEFAULT_LENGTH = 1000; // In terms of "body parts"
-    const MAX_SNAKE_SIZE = 2500;
+    const DEFAULT_LENGTH = 25; // In terms of "body parts"
+    const MAX_SNAKE_SIZE = 250;
 
     /**
      * @var Player
