@@ -80,9 +80,7 @@ class Game
 
         // Execute $this->tick() on every tick interval
         $this->loop->addPeriodicTimer($this->tickInterval / 1000, [$this, 'tick']);
-        $this->loop->addPeriodicTimer(0.2, function() {
-            var_dump(round(memory_get_usage() / 1024 / 1024, 2));
-        });
+
         $this->isRunning = true;
     }
 
