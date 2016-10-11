@@ -3,6 +3,8 @@ Sn4k3
 
 ![Frendly snek](snake.jpg)
 
+![Frendly snek demo](sn4k3.gif)
+
 # Installation
 
 Install dependencies
