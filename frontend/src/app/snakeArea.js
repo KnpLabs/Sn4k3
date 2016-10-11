@@ -46,7 +46,7 @@ class SnakeArea {
   }
 
   create() {
-    this.game.world.resize(100000, 100000);
+    this.game.world.resize(1000000, 1000000);
 
     this.game.camera.y = this.game.world.centerY - (this.game.camera.height / 2);
     this.game.camera.x = this.game.world.centerX - (this.game.camera.width / 2);
@@ -66,6 +66,27 @@ class SnakeArea {
         return player;
       }
     }
+  }
+
+  insideViewZone(x, y, radius) {
+    var hx = x,
+      hy = y,
+      hh = radius,
+      hw = radius;
+
+    var cx = this.game.camera.x;
+    var cy = this.game.camera.y;
+    var ch = this.game.camera.height;
+    var cw = this.game.camera.width;
+
+    if (hx < cx + cw &&
+      hx + hw > cx &&
+      hy < cy + ch &&
+      hh + hy > cy) {
+      return true;
+    }
+
+    return false;
   }
 
   update() {
@@ -110,6 +131,15 @@ class SnakeArea {
     let items = [];
 
     for (const bodyPart of player.snake.bodyParts) {
+
+      if (!this.insideViewZone(
+          this.game.world.centerX + bodyPart.center.x,
+          this.game.world.centerY + bodyPart.center.y,
+          bodyPart.radius
+        )) {
+        continue;
+      }
+
       if (first) {
         item = this.game.add.sprite(
           this.game.world.centerX + bodyPart.center.x,
@@ -168,6 +198,14 @@ class SnakeArea {
   }
 
   drawFood(food) {
+    if (!this.insideViewZone(
+        this.game.world.centerX + food.circle.center.x,
+        this.game.world.centerY + food.circle.center.y,
+        food.circle.radius
+      )) {
+      return;
+    }
+
     const item = this.game.add.sprite(
       this.game.world.centerX + food.circle.center.x,
       this.game.world.centerY + food.circle.center.y,
@@ -179,21 +217,6 @@ class SnakeArea {
 
     item.scale.x = food.circle.radius / 60;
     item.scale.y = food.circle.radius / 60;
-
-    // const circle = this.game.add.graphics(
-    //   this.game.world.centerX,
-    //   this.game.world.centerY
-    // );
-    //
-    // circle.lineStyle(4, 0x37b714, 1);
-    //
-    // this.foods.add(circle);
-    //
-    // circle.drawCircle(
-    //   food.circle.center.x,
-    //   food.circle.center.y,
-    //   food.circle.radius
-    // );
 
     this.foods.add(item);
   }
