@@ -1,7 +1,7 @@
 {
   "name": "sn4k3-frontend",
   "version": "1.0.0",
-  "description": "Snake fights fuck yeah",
+  "description": "Snake fights hell yeah",
   "main": "app.js",
   "scripts": {
     "build": "NODE_PATH=frontend/src:frontend/node_modules ./node_modules/.bin/browserify src/app/app.js -o public/bundle.js",
