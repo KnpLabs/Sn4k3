@@ -3,7 +3,7 @@ var http = require('http');
 var app = express();
 var server = http.createServer(app);
 
-const PORT = 80;
+const PORT = 8080;
 
 // Handle server errors
 server.on('error', function (e) {

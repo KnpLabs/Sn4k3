@@ -1,0 +1,18 @@
+version: '2.0'
+
+services:
+    crossbar:
+        build: ./crossbar/
+        image: crossbario/crossbar
+        ports:
+            - '7777:8080'
+
+    broadcaster:
+        build: ./backend/
+        ports:
+            - '8888:80'
+
+    frontend:
+        build: ./frontend/
+        ports:
+            - "8080:8080"

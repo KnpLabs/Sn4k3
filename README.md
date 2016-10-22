@@ -7,50 +7,66 @@ Sn4k3 - next generation MMO
 
 #### Documentation index
 
-* [Installation](#installation)
-* [Execute](#execute)
+* [Installation](#install)
+* [Run](#run)
 * [Bottlenecks](#nottlenecks)
 * [Backend readme](backend/README.md)
 * [Frontend readme](frontend/README.md)
 
-# Installation
+# Requirements <small>(if you don't have Docker)</small>
 
-Install dependencies
+* PHP >=7.0
+* Python >=2.7 (with `pip`)
+* NodeJS >=4.4 (with `npm`)
+
+# Install
+
+## With Docker
+
+Just run `docker-compose build`.
+
+## Without Docker
+
+Execute all these commands directly from the root directory of the repository.
 
 ```bash
-# Root install of crossbar
 pip install crossbar
-
-# Backend dependencies
-cd backend/
-composer install
-
-# Frontend dependencies
-cd frontend/
-npm install
+composer --working-dir=backend install
+npm --prefix=frontend install
 npm run build
-# In dev, you can run this:
-npm run watch
 ```
 
-Configure your web-server at `frontend/public`
+# Run
 
-:information_source: If you want to install it with docker, please follow this link:<br>
-http://crossbar.io/docs/Installation-on-Docker/
+## With Docker
 
-# Execute
+Just execute `docker-compose up -d`
+
+And go to `127.0.0.1:8080`.
+
+## Without docker
+
+You will need at least 3 terminals for this, because all apps need to be run independently.
 
 Run Crossbar middleware instance
 
 ```bash
-crossbar start
+crossbar start --config=crossbar/config.json
 ```
 
-And run the php broadcast application
+Run the php broadcast application
 
 ```bash
 php backend/broadcast.php
 ```
+
+And finally execute nodejs static server
+
+```bash
+node frontend/server.js
+```
+
+And go to `127.0.0.1:8080`.
 
 # Bottlenecks
 
