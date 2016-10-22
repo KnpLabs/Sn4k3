@@ -1,13 +1,12 @@
 <?php
 
-use Psr\Log\AbstractLogger;
-use Thruway\Logging\Logger as ThruLogger;
+namespace Sn4k3\Logger;
 
-class Logger extends AbstractLogger
+use Psr\Log\AbstractLogger;
+
+class MutedLogger extends AbstractLogger
 {
     public function log($level, $message, array $context = array())
     {
     }
 }
-
-ThruLogger::set(new Logger());
