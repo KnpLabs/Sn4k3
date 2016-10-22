@@ -17,5 +17,9 @@
   "devDependencies": {
     "browserify": "^13.1.0",
     "watchify": "^3.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/KnpLabs/Sn4k3.git"
   }
 }
