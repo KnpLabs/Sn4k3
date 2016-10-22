@@ -11,6 +11,7 @@ class Application
 {
     const CROSSBAR_WEBSOCKET_PORT = 7777;
     const CROSSBAR_WEBSOCKET_PATH = 'sn4k3';
+    const CROSSBAR_WEBSOCKET_HOST = '127.0.0.1';
 
     const EVENT_INCOMING_ACTION = 'action';
     const EVENT_INCOMING_JOIN = 'join';
@@ -20,12 +21,12 @@ class Application
      * @var LoopInterface
      */
     private $loop;
-    
+
     /**
      * @var Game
      */
     private $game;
-    
+
     /**
      * @var WebSocket
      */
@@ -33,9 +34,16 @@ class Application
 
     public function __construct()
     {
+        $host = self::CROSSBAR_WEBSOCKET_HOST;
+
+        if ('1' === getenv('DOCKER_SETUP')) {
+            // FIXME: we must find the correct host from the PHP broadcaster in Docker mode.
+            $host = getenv('HOSTNAME');
+        }
+
         $this->loop = Factory::create();
         $this->game = new Game($this->loop);
-        $this->webSocket = new WebSocket(self::CROSSBAR_WEBSOCKET_PORT, self::CROSSBAR_WEBSOCKET_PATH, $this->loop);
+        $this->webSocket = new WebSocket($host, self::CROSSBAR_WEBSOCKET_PORT, self::CROSSBAR_WEBSOCKET_PATH, $this->loop);
 
         $this->listenIncomingMessages();
         $this->broadcastTick();

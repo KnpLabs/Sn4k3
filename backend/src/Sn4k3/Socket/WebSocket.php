@@ -16,7 +16,7 @@ class WebSocket
     private $client;
     private $session;
 
-    public function __construct($port, $path, LoopInterface $loop)
+    public function __construct($host, $port, $path, LoopInterface $loop)
     {
         $this->client = new Client(
             'realm1',
@@ -24,7 +24,7 @@ class WebSocket
         );
 
         $this->client->addTransportProvider(new PawlTransportProvider(
-            sprintf('ws://127.0.0.1:%s/%s', $port, $path)
+            sprintf('ws://'.$host.':%s/%s', $port, $path)
         ));
 
         $this->client->on('open', [$this, 'createSession']);

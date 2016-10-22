@@ -12,8 +12,6 @@ services:
     #  this is why it depends on it.
     broadcaster:
         build: ./backend/
-        depends_on:
-            - crossbar
         links:
             - crossbar
 
