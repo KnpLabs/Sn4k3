@@ -1,8 +1,7 @@
 vendor
 .crossbar
-backend/build
-backend/phpunit.xml
 node_modules
 
-frontend/node_modules
+backend/build
+backend/phpunit.xml
 frontend/public/bundle.js
