@@ -5,6 +5,14 @@ Sn4k3 - next generation MMO
 
 ![Frendly snek demo](sn4k3.gif)
 
+#### Documentation index
+
+* [Installation](#installation)
+* [Execute](#execute)
+* [Bottlenecks](#nottlenecks)
+* [Backend readme](backend/README.md)
+* [Frontend readme](frontend/README.md)
+
 # Installation
 
 Install dependencies
