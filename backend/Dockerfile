@@ -14,6 +14,4 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN composer --working-dir=/app install --optimize-autoloader --classmap-authoritative --no-interaction --prefer-dist --no-scripts
 
-EXPOSE 80
-
 CMD ["php", "broadcast.php"]
