@@ -244,7 +244,6 @@ class SnakeArea {
 
     var players = this.worldData.players;
 
-    console.log(players);
     if (players.length === 0) {
       return;
     }

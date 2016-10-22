@@ -24,6 +24,6 @@ $(document).ready(() => {
         var arrowKeysManager = new ArrowKeysManager(CrossbarConnection);
         arrowKeysManager.init();
     } catch (e) {
-        console.log(e);
+        console.error(e);
     }
 });
