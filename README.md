@@ -32,7 +32,7 @@ Execute all these commands directly from the root directory of the repository.
 ```bash
 pip install crossbar
 composer --working-dir=backend install
-npm --prefix=frontend install
+npm install ./frontend/
 npm run build
 ```
 
