@@ -5,6 +5,7 @@ namespace Sn4k3\Socket;
 use Evenement\EventEmitterTrait;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
 use Thruway\ClientSession;
 use Thruway\Peer\Client;
 use Thruway\Transport\PawlTransportProvider;
@@ -13,7 +14,14 @@ class WebSocket
 {
     use EventEmitterTrait;
 
+    /**
+     * @var Client
+     */
     private $client;
+
+    /**
+     * @var ClientSession
+     */
     private $session;
 
     public function __construct($host, $port, $path, LoopInterface $loop)
@@ -35,11 +43,17 @@ class WebSocket
         $this->client->start(false);
     }
 
+    /**
+     * @return ClientSession
+     */
     public function getSession()
     {
         return $this->session;
     }
 
+    /**
+     * @return PromiseInterface
+     */
     public function promiseSession()
     {
         $defer = new Deferred();
@@ -55,6 +69,9 @@ class WebSocket
         return $defer->promise();
     }
 
+    /**
+     * @param ClientSession $session
+     */
     public function createSession(ClientSession $session)
     {
         $this->session = $session;
