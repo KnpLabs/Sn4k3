@@ -34,11 +34,12 @@ class Application
 
     public function __construct()
     {
-        $host = self::CROSSBAR_WEBSOCKET_HOST;
+        $host = getenv('CROSSBAR_HOST') ?: self::CROSSBAR_WEBSOCKET_HOST;
 
-        if ('1' === getenv('DOCKER_SETUP')) {
-            // FIXME: we must find the correct host from the PHP broadcaster in Docker mode.
-            $host = getenv('HOSTNAME');
+        // If host is not an IP address, get the IP address instead of the hostname.
+        // Else, the client tries to resolve the name by DNS and it may not work with Docker.
+        if (!preg_match('~^\d+(?:\.\d+){3}$~', $host)) {
+            $host = gethostbyname($host);
         }
 
         $this->loop = Factory::create();
