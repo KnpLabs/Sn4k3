@@ -32,7 +32,8 @@ Execute all these commands directly from the root directory of the repository.
 ```bash
 pip install crossbar
 composer --working-dir=backend install
-npm install ./frontend/
+cd frontend
+npm install
 npm run build
 ```
 
@@ -63,7 +64,8 @@ php backend/broadcast.php
 And finally execute nodejs static server
 
 ```bash
-node frontend/server.js
+cd frontend
+node server.js
 ```
 
 And go to `127.0.0.1:8080`.
