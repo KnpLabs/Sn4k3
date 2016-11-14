@@ -4,13 +4,14 @@
   "description": "Snake fights hell yeah",
   "main": "app.js",
   "scripts": {
-    "build": "NODE_PATH=frontend/src:frontend/node_modules ./node_modules/.bin/browserify src/app/app.js -o public/bundle.js",
-    "watch": "NODE_PATH=frontend/src:frontend/node_modules ./node_modules/.bin/watchify src/app/app.js -o public/bundle.js -v"
+    "build": "./node_modules/.bin/browserify src/app/app.js -o public/bundle.js",
+    "watch": "./node_modules/.bin/watchify src/app/app.js -o public/bundle.js -v"
   },
   "author": "Sn4k3 Team",
   "license": "ISC",
   "dependencies": {
     "autobahn": "^0.10.1",
+    "express": "^4.14.0",
     "jquery": "^3.1.1",
     "phaser": "^2.6.2"
   },

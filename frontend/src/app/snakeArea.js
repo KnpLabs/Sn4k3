@@ -35,10 +35,10 @@ class SnakeArea {
 
   preload() {
     this.game.stage.backgroundColor = '#000';
-    this.game.load.image('bg', 'frontend/public/assets/bg.jpg');
-    this.game.load.spritesheet('snek', 'frontend/public/assets/snakeswag.png', 32, 32, 21, 2);
-    this.game.load.spritesheet('body', 'frontend/public/assets/body.png', 18, 14, 4);
-    this.game.load.spritesheet('fruits', 'frontend/public/assets/fruits.png', 60, 60, 12);
+    this.game.load.image('bg', 'assets/bg.jpg');
+    this.game.load.spritesheet('snek', 'assets/snakeswag.png', 32, 32, 21, 2);
+    this.game.load.spritesheet('body', 'assets/body.png', 18, 14, 4);
+    this.game.load.spritesheet('fruits', 'assets/fruits.png', 60, 60, 12);
   }
 
   render() {
@@ -244,7 +244,6 @@ class SnakeArea {
 
     var players = this.worldData.players;
 
-    console.log(players);
     if (players.length === 0) {
       return;
     }

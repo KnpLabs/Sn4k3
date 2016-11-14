@@ -4,7 +4,6 @@ const SnakeArea = require('./snakeArea');
 const ArrowKeysManager = require('./arrowKeysManager');
 
 // now actually open the connection to WAMP Router (Crossbar.io)
-//
 CrossbarConnection.open();
 
 $(document).ready(() => {
@@ -24,6 +23,6 @@ $(document).ready(() => {
         var arrowKeysManager = new ArrowKeysManager(CrossbarConnection);
         arrowKeysManager.init();
     } catch (e) {
-        console.log(e);
+        console.error(e);
     }
 });

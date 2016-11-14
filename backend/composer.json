@@ -3,13 +3,13 @@
     "license": "proprietary",
     "description": "Hiss, a kuwl snek game tu play",
     "type": "project",
-    "require": {
-        "voryx/thruway": "^0.4.2"
-    },
     "autoload": {
         "psr-4": {
             "": "src"
         }
+    },
+    "require": {
+        "voryx/thruway": "^0.4.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.5"

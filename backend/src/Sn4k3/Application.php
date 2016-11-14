@@ -11,6 +11,7 @@ class Application
 {
     const CROSSBAR_WEBSOCKET_PORT = 7777;
     const CROSSBAR_WEBSOCKET_PATH = 'sn4k3';
+    const CROSSBAR_WEBSOCKET_HOST = '127.0.0.1';
 
     const EVENT_INCOMING_ACTION = 'action';
     const EVENT_INCOMING_JOIN = 'join';
@@ -20,12 +21,12 @@ class Application
      * @var LoopInterface
      */
     private $loop;
-    
+
     /**
      * @var Game
      */
     private $game;
-    
+
     /**
      * @var WebSocket
      */
@@ -33,9 +34,17 @@ class Application
 
     public function __construct()
     {
+        $host = getenv('CROSSBAR_HOST') ?: self::CROSSBAR_WEBSOCKET_HOST;
+
+        // If host is not an IP address, get the IP address instead of the hostname.
+        // Else, the client tries to resolve the name by DNS and it may not work with Docker.
+        if (!preg_match('~^\d+(?:\.\d+){3}$~', $host)) {
+            $host = gethostbyname($host);
+        }
+
         $this->loop = Factory::create();
         $this->game = new Game($this->loop);
-        $this->webSocket = new WebSocket(self::CROSSBAR_WEBSOCKET_PORT, self::CROSSBAR_WEBSOCKET_PATH, $this->loop);
+        $this->webSocket = new WebSocket($host, self::CROSSBAR_WEBSOCKET_PORT, self::CROSSBAR_WEBSOCKET_PATH, $this->loop);
 
         $this->listenIncomingMessages();
         $this->broadcastTick();
